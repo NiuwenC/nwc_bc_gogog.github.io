@@ -4,13 +4,40 @@
   
   
   <entry>
-    <title>Hello World</title>
-    <link href="/nwc_bc_gogog.github.io/2021/11/22/hello-world/"/>
-    <url>/nwc_bc_gogog.github.io/2021/11/22/hello-world/</url>
+    <title>B-2-区块链应用-应用开发</title>
+    <link href="/nwc_bc_gogog.github.io/2021/11/23/B-2-%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/"/>
+    <url>/nwc_bc_gogog.github.io/2021/11/23/B-2-%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8-%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="区块链初级应用开发"><a href="#区块链初级应用开发" class="headerlink" title="区块链初级应用开发"></a>区块链初级应用开发</h2><h2 id="区块链高级应用开发"><a href="#区块链高级应用开发" class="headerlink" title="区块链高级应用开发"></a>区块链高级应用开发</h2>]]></content>
     
     
+    
+    <tags>
+      
+      <tag>区块链</tag>
+      
+      <tag>solidity</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>B-1-区块链应用-基础知识</title>
+    <link href="/nwc_bc_gogog.github.io/2021/11/23/B-1-%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <url>/nwc_bc_gogog.github.io/2021/11/23/B-1-%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    
+    <content type="html"><![CDATA[<p>区块链基础知识</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>区块链</tag>
+      
+    </tags>
     
   </entry>
   
