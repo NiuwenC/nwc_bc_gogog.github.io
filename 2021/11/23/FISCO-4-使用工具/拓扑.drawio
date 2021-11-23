@@ -1,0 +1,40 @@
+<mxfile host="65bd71144e">
+    <diagram id="At_1Ybq5NjsiSDnCGWZa" name="第 1 页">
+        <mxGraphModel dx="650" dy="365" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#a0522d;strokeColor=#6D1F00;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="54" y="23" width="562" height="346" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="78" y="63" width="300" height="276" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="群组2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#191919;fontSize=16;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="199" y="73" width="49" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="&lt;font color=&quot;#191919&quot;&gt;机构A-节点4&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=16;gradientColor=#97d077;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="119" y="103" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="&lt;font color=&quot;#191919&quot;&gt;机构A-节点0&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=16;gradientColor=#97d077;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="241" y="99" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;font color=&quot;#191919&quot;&gt;机构C-节点5&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=16;gradientColor=#ffd966;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="121" y="218" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="&lt;font color=&quot;#191919&quot;&gt;机构A-节点1&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=16;gradientColor=#97d077;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="253" y="215" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="群组1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontColor=#191919;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="382" y="58" width="91" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="&lt;font color=&quot;#191919&quot;&gt;机构B-节点2&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=16;gradientColor=#ffa500;fillColor=#ffcd28;strokeColor=#d79b00;" vertex="1" parent="1">
+                    <mxGeometry x="433" y="103" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="&lt;font color=&quot;#191919&quot;&gt;机构B-节点3&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=16;gradientColor=#ffa500;fillColor=#ffcd28;strokeColor=#d79b00;" vertex="1" parent="1">
+                    <mxGeometry x="433" y="212" width="80" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
