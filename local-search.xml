@@ -29,8 +29,14 @@
     <link href="/nwc_bc_gogog.github.io/2021/11/23/B-1-%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     <url>/nwc_bc_gogog.github.io/2021/11/23/B-1-%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
     
-    <content type="html"><![CDATA[<p>区块链基础知识</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="01-什么是hash函数"><a href="#01-什么是hash函数" class="headerlink" title="01 什么是hash函数"></a>01 什么是hash函数</h2><p>hash函数，一般翻译为散列；<br>在比特币领域中hash函数指特定算法支持的hash函数 (SHA-256)</p><p>演示网站: <a href="https://andersbrownworth.com/blockchain">https://andersbrownworth.com/blockchain</a></p><p><img src="01.png" alt="区块"></p>]]></content>
     
+    
+    <categories>
+      
+      <category>区块链应用</category>
+      
+    </categories>
     
     
     <tags>
