@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<html lang="zh_CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <link rel="icon" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#447EA5">
+  <meta name="description" content="">
+  <meta name="author" content="JackNiu">
+  <meta name="keywords" content="">
+  <meta name="description" content="https:&#x2F;&#x2F;fisco-bcos-documentation.readthedocs.io&#x2F;zh_CN&#x2F;latest&#x2F;docs&#x2F;sdk&#x2F;java_sdk&#x2F;quick_start.html https:&#x2F;&#x2F;gitee.com&#x2F;niuwenchen&#x2F;fisco_bcos_project.git 1 example配置文件: config.toml 1234567891011121314151617">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FISCO-3-开发应用-java">
+<meta property="og:url" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/24/FISCO-3-%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8-java/index.html">
+<meta property="og:site_name" content="区块链啦啦啦">
+<meta property="og:description" content="https:&#x2F;&#x2F;fisco-bcos-documentation.readthedocs.io&#x2F;zh_CN&#x2F;latest&#x2F;docs&#x2F;sdk&#x2F;java_sdk&#x2F;quick_start.html https:&#x2F;&#x2F;gitee.com&#x2F;niuwenchen&#x2F;fisco_bcos_project.git 1 example配置文件: config.toml 1234567891011121314151617">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-24T07:16:39.000Z">
+<meta property="article:modified_time" content="2021-11-26T09:27:48.470Z">
+<meta property="article:author" content="JackNiu">
+<meta property="article:tag" content="tool">
+<meta property="article:tag" content="sdk">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>FISCO-3-开发应用-java - 区块链啦啦啦</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/nwc_bc_gogog.github.io/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/nwc_bc_gogog.github.io/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"niuwenc.github.io","root":"/nwc_bc_gogog.github.io/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/nwc_bc_gogog.github.io/local-search.xml"};
+  </script>
+  <script  src="/nwc_bc_gogog.github.io/js/utils.js" ></script>
+  <script  src="/nwc_bc_gogog.github.io/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/nwc_bc_gogog.github.io/">
+      <strong>我的区块链</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/nwc_bc_gogog.github.io/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FISCO-3-开发应用-java">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-24 15:16" pubdate>
+        2021年11月24日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      18k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      56 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FISCO-3-开发应用-java</h1>
+            
+            <div class="markdown-body">
+              <p><a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/quick_start.html">https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk/quick_start.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/niuwenchen/fisco_bcos_project.git">https://gitee.com/niuwenchen/fisco_bcos_project.git</a></p>
+<h2 id="1-example"><a href="#1-example" class="headerlink" title="1 example"></a>1 example</h2><p>配置文件: config.toml</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[cryptoMaterial]</span><br><br><span class="hljs-attr">certPath</span> = <span class="hljs-string">&quot;conf&quot;</span>                           <span class="hljs-comment"># The certification path</span><br><br><span class="hljs-comment"># The following configurations take the certPath by default if commented</span><br><span class="hljs-comment"># caCert = &quot;conf/ca.crt&quot;                    # CA cert file path</span><br><span class="hljs-comment"># If connect to the GM node, default CA cert path is $&#123;certPath&#125;/gm/gmca.crt</span><br><br><span class="hljs-comment"># sslCert = &quot;conf/sdk.crt&quot;                  # SSL cert file path</span><br><span class="hljs-comment"># If connect to the GM node, the default SDK cert path is $&#123;certPath&#125;/gm/gmsdk.crt</span><br><br><span class="hljs-comment"># sslKey = &quot;conf/sdk.key&quot;                   # SSL key file path</span><br><span class="hljs-comment"># If connect to the GM node, the default SDK privateKey path is $&#123;certPath&#125;/gm/gmsdk.key</span><br><br><span class="hljs-comment"># enSslCert = &quot;conf/gm/gmensdk.crt&quot;         # GM encryption cert file path</span><br><span class="hljs-comment"># default load the GM SSL encryption cert from $&#123;certPath&#125;/gm/gmensdk.crt</span><br><br><span class="hljs-comment"># enSslKey = &quot;conf/gm/gmensdk.key&quot;          # GM ssl cert file path</span><br><span class="hljs-comment"># default load the GM SSL encryption privateKey from $&#123;certPath&#125;/gm/gmensdk.key</span><br><br><span class="hljs-section">[network]</span><br><span class="hljs-attr">peers</span>=[<span class="hljs-string">&quot;172.16.0.89:20200&quot;</span>]   <span class="hljs-comment"># The peer list to connect</span><br><br><span class="hljs-comment"># Configure a private topic as a topic message sender.</span><br><span class="hljs-comment"># [[amop]]</span><br><span class="hljs-comment"># topicName = &quot;PrivateTopic1&quot;</span><br><span class="hljs-comment"># publicKeys = [ &quot;conf/amop/consumer_public_key_1.pem&quot; ]    # Public keys of the nodes that you want to send AMOP message of this topic to.</span><br><br><span class="hljs-comment"># Configure a private topic as a topic subscriber.</span><br><span class="hljs-comment"># [[amop]]</span><br><span class="hljs-comment"># topicName = &quot;PrivateTopic2&quot;</span><br><span class="hljs-comment"># privateKey = &quot;conf/amop/consumer_private_key.p12&quot;         # Your private key that used to subscriber verification.</span><br><span class="hljs-comment"># password = &quot;123456&quot;</span><br><br><span class="hljs-section">[account]</span><br><span class="hljs-attr">keyStoreDir</span> = <span class="hljs-string">&quot;account&quot;</span>         <span class="hljs-comment"># The directory to load/store the account file, default is &quot;account&quot;</span><br><span class="hljs-comment"># accountFilePath = &quot;&quot;          # The account file path (default load from the path specified by the keyStoreDir)</span><br><span class="hljs-attr">accountFileFormat</span> = <span class="hljs-string">&quot;pem&quot;</span>       <span class="hljs-comment"># The storage format of account file (Default is &quot;pem&quot;, &quot;p12&quot; as an option)</span><br><br><span class="hljs-comment"># accountAddress = &quot;&quot;           # The transactions sending account address</span><br><span class="hljs-comment"># Default is a randomly generated account</span><br><span class="hljs-comment"># The randomly generated account is stored in the path specified by the keyStoreDir</span><br><br><span class="hljs-comment"># password = &quot;&quot;                 # The password used to load the account file</span><br><br><span class="hljs-section">[threadPool]</span><br><span class="hljs-comment"># channelProcessorThreadSize = &quot;16&quot;         # The size of the thread pool to process channel callback</span><br><span class="hljs-comment"># Default is the number of cpu cores</span><br><br><span class="hljs-comment"># receiptProcessorThreadSize = &quot;16&quot;         # The size of the thread pool to process transaction receipt notification</span><br><span class="hljs-comment"># Default is the number of cpu cores</span><br><br><span class="hljs-attr">maxBlockingQueueSize</span> = <span class="hljs-string">&quot;102400&quot;</span>             <span class="hljs-comment"># The max blocking queue size of the thread pool</span><br><br></code></pre></td></tr></table></figure>
+<p>加密材料: resources/conf/xxx</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.jackniu.fisco;<br><br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.BcosSDK;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.client.Client;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.client.protocol.response.BlockNumber;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.config.ConfigOption;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.crypto.keypair.CryptoKeyPair;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.model.TransactionReceipt;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.transaction.model.exception.ContractException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BcosSDKTest</span> </span>&#123;<br>    <span class="hljs-comment">//获取配置文件路径</span><br>    <span class="hljs-keyword">public</span>  <span class="hljs-keyword">static</span>  <span class="hljs-keyword">final</span> String configPath = BcosSDKTest.class.getClassLoader().getResource(<span class="hljs-string">&quot;config.toml&quot;</span>).getPath();<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ContractException </span>&#123;<br>        System.out.println(configPath);<br><br>        String path=<span class="hljs-string">&quot;E:\\project\\fisco_project\\fisco_bcos_project\\2-sdk\\fisco-bcos-sdk\\src\\main\\resources&quot;</span><br>                + <span class="hljs-string">&quot;\\config.toml&quot;</span>;<br><br>        BcosSDK sdk = BcosSDK.build(path);<br>        Client client = sdk.getClient(Integer.valueOf(<span class="hljs-number">1</span>));<br><br>        <span class="hljs-comment">//获取群组1的块高</span><br>        BlockNumber blockNumber = client.getBlockNumber();<br>        System.out.println(blockNumber);<br><br>        <span class="hljs-comment">//向群组1部署HelloWorld合约</span><br>        CryptoKeyPair cryptoKeyPair =  client.getCryptoSuite().getCryptoKeyPair();<br>        HelloJack helloJack = HelloJack.deploy(client,cryptoKeyPair);<br><br>        String getValue = helloJack.get();<br><br>        System.out.println(getValue);<br>        TransactionReceipt receipt = helloJack.set(<span class="hljs-string">&quot;Hello, fisco&quot;</span>);<br><br>        String getValue1 = helloJack.get();<br><br>        System.out.println(getValue1);<br><br>    &#125;<br><br><br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="2-AMOP功能"><a href="#2-AMOP功能" class="headerlink" title="2 AMOP功能"></a>2 AMOP功能</h2><p>Java SDK支持链上信使协议AMOP(Advanced Messages Onchain Protocol),用户可以通过AMOP协议与其他机构互传信息。</p>
+<h3 id="2-1-配置方法"><a href="#2-1-配置方法" class="headerlink" title="2.1 配置方法"></a>2.1 配置方法</h3><p>AMOP有两种话题模式: 普通话题和私有话题。任何一个订阅了某普通话题的订阅者都能收到该话题相关的推送消息。但是在某些情况下，发送者只希望特定的接收者能接收到消息，不希望无关的接收者能任意的监听此话题，就需要使用私有话题了。</p>
+<p>AMOP私有话题的特殊之处在于，SDK之间需要身份验证，认证通过的订阅者才可以接收到该话题的信息。 </p>
+<pre><code>身份验证的原理，首先由发送方生成一个随机数，订阅方用私钥对随机数签名，发送方用配置的公钥验证这个签名来确定对方是否是自己指定的订阅方。 因此，一个成功的私钥话题通道的建立需要
+(1) 消息发送者需要设置指定的订阅者的公钥
+(2) 订阅方也需要设置能证明自己身份的私钥
+</code></pre>
+<p>当用户需要订阅私有话题，或者作为消息发布者配置一个私有话题时，可以用配置文件进行配置。 但AMOP的配置不是必须项，私有话题的订阅和设置，还可以通过调用AMOP的接口实现。</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"># AMOP configuration<br># You can use following two methods <span class="hljs-keyword">to</span> configure <span class="hljs-keyword">as</span> a <span class="hljs-keyword">private</span> topic message sender <span class="hljs-built_in">or</span> subscriber.<br># Usually, the <span class="hljs-keyword">public</span> <span class="hljs-keyword">key</span> <span class="hljs-built_in">and</span> <span class="hljs-keyword">private</span> <span class="hljs-keyword">key</span> <span class="hljs-built_in">is</span> generated <span class="hljs-keyword">by</span> subscriber.<br># Message sender receive <span class="hljs-keyword">public</span> <span class="hljs-keyword">key</span> <span class="hljs-keyword">from</span> topic subscriber <span class="hljs-keyword">then</span> make configuration.<br># But, please <span class="hljs-keyword">do</span> <span class="hljs-built_in">not</span> config <span class="hljs-keyword">as</span> both the message sender <span class="hljs-built_in">and</span> the subscriber <span class="hljs-keyword">of</span> one <span class="hljs-keyword">private</span> topic, <span class="hljs-built_in">or</span> you may send the message <span class="hljs-keyword">to</span> yourself.<br><br># Configure a <span class="hljs-keyword">private</span> topic <span class="hljs-keyword">as</span> a topic message sender.<br># [[amop]]<br># topicName = <span class="hljs-string">&quot;PrivateTopic&quot;</span><br># publicKeys = [ <span class="hljs-string">&quot;conf/amop/consumer_public_key_1.pem&quot;</span> ]    # <span class="hljs-keyword">Public</span> keys <span class="hljs-keyword">of</span> the nodes that you want <span class="hljs-keyword">to</span> send AMOP message <span class="hljs-keyword">of</span> this topic <span class="hljs-keyword">to</span>.<br><br># Configure a <span class="hljs-keyword">private</span> topic <span class="hljs-keyword">as</span> a topic subscriber.<br># [[amop]]<br># topicName = <span class="hljs-string">&quot;PrivateTopic&quot;</span><br># privateKey = <span class="hljs-string">&quot;conf/amop/consumer_private_key.p12&quot;</span>         # Your <span class="hljs-keyword">private</span> <span class="hljs-keyword">key</span> that used <span class="hljs-keyword">to</span> subscriber verification.<br># password = <span class="hljs-string">&quot;123456&quot;</span><br><br></code></pre></td></tr></table></figure>
+<p>配置详解:</p>
+<ol>
+<li>配置一个私有话题(作为消息发布者)</li>
+</ol>
+<ul>
+<li>需要在配置文件中新建一个[[amop]]节点</li>
+<li>配置话题 topicName=”xxxx”</li>
+<li>消息订阅方的公钥列表 publicKeys=[“conf/amop/consumer_public_key_1.pem”]，即指定的接收对象的公钥，这个公钥必须与某个订阅方的私钥匹配</li>
+</ul>
+<ol start="2">
+<li>订阅一个私有话题(作为订阅者)</li>
+</ol>
+<ul>
+<li>amop</li>
+<li>topicName=”xxx”</li>
+<li>证明订阅方身份的私钥</li>
+<li>密码<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[[amop]]</span><br><span class="hljs-attr">topicName</span> = <span class="hljs-string">&quot;PrivateTopic&quot;</span><br><span class="hljs-attr">privateKey</span> = <span class="hljs-string">&quot;conf/amop/consumer_private_key.p12&quot;</span><br><span class="hljs-attr">password</span> = <span class="hljs-string">&quot;123456&quot;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-2-接口说明"><a href="#2-2-接口说明" class="headerlink" title="2.2 接口说明"></a>2.2 接口说明</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * Copyright 2014-2020  [fisco-dev]</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except</span><br><span class="hljs-comment"> * in compliance with the License. You may obtain a copy of the License at</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * Unless required by applicable law or agreed to in writing, software distributed under the License</span><br><span class="hljs-comment"> * is distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express</span><br><span class="hljs-comment"> * or implied. See the License for the specific language governing permissions and limitations under</span><br><span class="hljs-comment"> * the License.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> */</span><br><br><span class="hljs-keyword">package</span> org.fisco.bcos.sdk.amop;<br><br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.Set;<br><span class="hljs-keyword">import</span> java.util.UUID;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.amop.topic.TopicManager;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.channel.Channel;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.config.ConfigOption;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.crypto.keystore.KeyTool;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * AMOP module interface.</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Maggie</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Amop</span> </span>&#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Create a Amop object.</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> channel the channel to send/receive message</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> config the config object</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> Amop instance</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Amop <span class="hljs-title">build</span><span class="hljs-params">(Channel channel, ConfigOption config)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> AmopImp(channel, config);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Subscribe a normal topic.</span><br><span class="hljs-comment">     * 订阅一个普通话题</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> topicName the topic name</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> callback callback is called when receive a msg relate to this topic</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">subscribeTopic</span><span class="hljs-params">(String topicName, AmopCallback callback)</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Subscribe a private topic which need verify.</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> topicName the topic name</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> privateKeyTool the private key you used to prove your identity.</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> callback callback is called when receive a msg relate to this topic</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">subscribePrivateTopics</span><span class="hljs-params">(String topicName, KeyTool privateKeyTool, AmopCallback callback)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">subscribePrivateTopics</span><span class="hljs-params">(String topicName, String hexPrivateKey, AmopCallback callback)</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Config a topic which is need verification, after that user can send message to verified</span><br><span class="hljs-comment">     * subscriber.</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> topicName the topic name</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> publicKeyTools the public keys of the target organizations that you want to</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">publishPrivateTopic</span><span class="hljs-params">(String topicName, List&lt;KeyTool&gt; publicKeyTools)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">publishPrivateTopicWithHexPublicKeyList</span><span class="hljs-params">(String topicName, List&lt;String&gt; publicKeyList)</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Unsubscribe a topic.</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> topicName the topic name</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unsubscribeTopic</span><span class="hljs-params">(String topicName)</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Send amop msg</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> content the sent message</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> callback the callback that will be called when receive the AMOP response</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sendAmopMsg</span><span class="hljs-params">(AmopMsgOut content, AmopResponseCallback callback)</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Send amop msg</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> content the broadcasted AMOP message</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">broadcastAmopMsg</span><span class="hljs-params">(AmopMsgOut content)</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Get all subscribe topics.</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> topic name list</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function">Set&lt;String&gt; <span class="hljs-title">getSubTopics</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * set amop default callback</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> cb the amop callback</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setCallback</span><span class="hljs-params">(AmopCallback cb)</span></span>;<br><br>    <span class="hljs-comment">/** Start. */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-comment">/** Stop. */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">stop</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * generate message sequence string</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> Sequence string</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> String <span class="hljs-title">newSeq</span><span class="hljs-params">()</span> </span>&#123;<br>        String seq = UUID.randomUUID().toString().replaceAll(<span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;&quot;</span>);<br>        <span class="hljs-keyword">return</span> seq;<br>    &#125;<br><br>    <span class="hljs-function">TopicManager <span class="hljs-title">getTopicManager</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sendSubscribe</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="2-3-demo"><a href="#2-3-demo" class="headerlink" title="2.3 demo"></a>2.3 demo</h3><p>广播 发送者</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.fisco.bcos.sdk.demo.amop.tool;<br><br><span class="hljs-keyword">import</span> java.time.LocalDateTime;<br><span class="hljs-keyword">import</span> java.time.format.DateTimeFormatter;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.BcosSDK;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.amop.Amop;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.amop.AmopMsgOut;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.amop.topic.TopicType;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.client.Client;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.client.protocol.response.Peers;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AmopPublisher</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> parameterNum = <span class="hljs-number">4</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String publisherFile =<br>            AmopPublisher.class<br>                    .getClassLoader()<br>                    .getResource(<span class="hljs-string">&quot;amop/config-publisher-for-test.toml&quot;</span>)<br>                    .getPath();<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> args topicName, isBroadcast, Content(Content you want to send out), Count(how many msg</span><br><span class="hljs-comment">     *     you want to send out)</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception AMOP publish exceptioned</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        <span class="hljs-keyword">if</span> (args.length &lt; parameterNum) &#123;<br>            System.out.println(<span class="hljs-string">&quot;param: target topic total number of request&quot;</span>);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        String topicName = args[<span class="hljs-number">0</span>];<br>        Boolean isBroadcast = Boolean.valueOf(args[<span class="hljs-number">1</span>]);<br>        String content = args[<span class="hljs-number">2</span>];<br>        Integer count = Integer.parseInt(args[<span class="hljs-number">3</span>]);<br>        BcosSDK sdk = BcosSDK.build(publisherFile);<br>        Amop amop = sdk.getAmop();<br><br>        System.out.println(<span class="hljs-string">&quot;3s ...&quot;</span>);<br>        Thread.sleep(<span class="hljs-number">1000</span>);<br>        System.out.println(<span class="hljs-string">&quot;2s ...&quot;</span>);<br>        Thread.sleep(<span class="hljs-number">1000</span>);<br>        System.out.println(<span class="hljs-string">&quot;1s ...&quot;</span>);<br>        Thread.sleep(<span class="hljs-number">1000</span>);<br><br>        <span class="hljs-keyword">if</span> (!subscribed(sdk, topicName)) &#123;<br>            System.out.println(<span class="hljs-string">&quot;No subscriber, exist.&quot;</span>);<br>        &#125;<br><br>        System.out.println(<span class="hljs-string">&quot;start test&quot;</span>);<br>        System.out.println(<span class="hljs-string">&quot;===================================================================&quot;</span>);<br><br>        <span class="hljs-keyword">for</span> (Integer i = <span class="hljs-number">0</span>; i &lt; count; ++i) &#123;<br>            Thread.sleep(<span class="hljs-number">2000</span>);<br>            AmopMsgOut out = <span class="hljs-keyword">new</span> AmopMsgOut();<br>            out.setType(TopicType.NORMAL_TOPIC);<br>            out.setContent(content.getBytes());<br>            out.setTimeout(<span class="hljs-number">6000</span>);<br>            out.setTopic(topicName);<br>            DemoAmopResponseCallback cb = <span class="hljs-keyword">new</span> DemoAmopResponseCallback();<br>            DateTimeFormatter df = DateTimeFormatter.ofPattern(<span class="hljs-string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);<br>            <span class="hljs-keyword">if</span> (isBroadcast) &#123;<br>                amop.broadcastAmopMsg(out);<br>                System.out.println(<br>                        <span class="hljs-string">&quot;Step 1: Send out msg by broadcast,  time: &quot;</span><br>                                + df.format(LocalDateTime.now())<br>                                + <span class="hljs-string">&quot; topic:&quot;</span><br>                                + out.getTopic()<br>                                + <span class="hljs-string">&quot; content:&quot;</span><br>                                + <span class="hljs-keyword">new</span> String(out.getContent()));<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                amop.sendAmopMsg(out, cb);<br>                System.out.println(<br>                        <span class="hljs-string">&quot;Step 1: Send out msg,  time: &quot;</span><br>                                + df.format(LocalDateTime.now())<br>                                + <span class="hljs-string">&quot; topic:&quot;</span><br>                                + out.getTopic()<br>                                + <span class="hljs-string">&quot; content:&quot;</span><br>                                + <span class="hljs-keyword">new</span> String(out.getContent()));<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">subscribed</span><span class="hljs-params">(BcosSDK sdk, String topicName)</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>        Client client = sdk.getClient(Integer.valueOf(<span class="hljs-number">1</span>));<br>        Boolean hasSubscriber = <span class="hljs-keyword">false</span>;<br>        Peers peers = client.getPeers();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>            <span class="hljs-keyword">for</span> (Peers.PeerInfo info : peers.getPeers()) &#123;<br>                <span class="hljs-keyword">for</span> (String tp : info.getTopic()) &#123;<br>                    <span class="hljs-keyword">if</span> (tp.equals(topicName)) &#123;<br>                        hasSubscriber = <span class="hljs-keyword">true</span>;<br>                        <span class="hljs-keyword">return</span> hasSubscriber;<br>                    &#125;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span> (!hasSubscriber) &#123;<br>                Thread.sleep(<span class="hljs-number">2000</span>);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>接收者</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.fisco.bcos.sdk.demo.amop.tool;<br><br><span class="hljs-keyword">import</span> java.net.URL;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.BcosSDK;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.amop.Amop;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.amop.AmopCallback;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AmopSubscriber</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        URL configUrl =<br>                AmopSubscriber.class<br>                        .getClassLoader()<br>                        .getResource(<span class="hljs-string">&quot;amop/config-subscriber-for-test.toml&quot;</span>);<br>        <span class="hljs-keyword">if</span> (args.length &lt; <span class="hljs-number">1</span>) &#123;<br>            System.out.println(<span class="hljs-string">&quot;Param: topic&quot;</span>);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        String topic = args[<span class="hljs-number">0</span>];<br>        <span class="hljs-comment">// Construct a BcosSDK instance</span><br>        BcosSDK sdk = BcosSDK.build(configUrl.getPath());<br><br>        <span class="hljs-comment">// Get the amop module instance</span><br>        Amop amop = sdk.getAmop();<br><br>        <span class="hljs-comment">// Set callback</span><br>        AmopCallback cb = <span class="hljs-keyword">new</span> DemoAmopCallback();<br>        <span class="hljs-comment">// Set a default callback</span><br>        amop.setCallback(cb);<br>        <span class="hljs-comment">// Subscriber a normal topic</span><br>        amop.subscribeTopic(topic, cb);<br>        System.out.println(<span class="hljs-string">&quot;Start test&quot;</span>);<br>    &#125;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+
+<p>还可以发送文件，具体看:  <a target="_blank" rel="noopener" href="https://github.com/FISCO-BCOS/java-sdk-demo.git">https://github.com/FISCO-BCOS/java-sdk-demo.git</a></p>
+<h2 id="3-合约事件推送"><a href="#3-合约事件推送" class="headerlink" title="3 合约事件推送"></a>3 合约事件推送</h2><p>合约事件推送功能提供了合约事件的异步推送机制，客户端向节点发送注册请求，在请求中携带客户端关注的合约事件的参数，节点根据请求参数对区块范围内的Event Log进行过滤，将结果分次推送给客户端。</p>
+<h3 id="3-1-交互协议"><a href="#3-1-交互协议" class="headerlink" title="3.1 交互协议"></a>3.1 交互协议</h3><p>客户端与节点的交互基于Channel协议。 交互分为三个阶段： 注册请求，节点回复，Event Log数据推送</p>
+<p><strong>注册请求</strong><br>客户端向节点发送事件推送的注册请求</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// request sample:</span><br>&#123;<br>  <span class="hljs-attr">&quot;fromBlock&quot;</span>: <span class="hljs-string">&quot;latest&quot;</span>,<br>  <span class="hljs-attr">&quot;toBlock&quot;</span>: <span class="hljs-string">&quot;latest&quot;</span>,<br>  <span class="hljs-attr">&quot;addresses&quot;</span>: [<br>    <span class="hljs-string">&quot;0xca5ed56862869c25da0bdf186e634aac6c6361ee&quot;</span><br>  ],<br>  <span class="hljs-attr">&quot;topics&quot;</span>: [<br>    <span class="hljs-string">&quot;0x91c95f04198617c60eaf2180fbca88fc192db379657df0e412a9f7dd4ebbe95d&quot;</span><br>  ],<br>  <span class="hljs-attr">&quot;groupID&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-attr">&quot;filterID&quot;</span>: <span class="hljs-string">&quot;bb31e4ec086c48e18f21cb994e2e5967&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>filerID：字符串类型，每次请求唯一，标记一次注册任务</li>
+<li>groupID：字符串类型，群组ID</li>
+<li>fromBlock：整形字符串，初始区块。“latest” 当前块高</li>
+<li>toBlock：整形字符串，最终区块。“latest” 处理至当前块高时，继续等待新区块</li>
+<li>addresses：字符串或者字符串数组：字符串表示单个合约地址，数组为多个合约地址，数组可以为空</li>
+<li>topics：字符串类型或者数组类型：字符串表示单个topic，数组为多个topic，数组可以为空</li>
+</ul>
+<p><strong>节点回复</strong><br>节点接受客户端注册请求时，会对请求参数进行校验，将是否成功接受该注册请求结果回复给客户端。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// response sample:</span><br>&#123;<br>  <span class="hljs-attr">&quot;filterID&quot;</span>: <span class="hljs-string">&quot;bb31e4ec086c48e18f21cb994e2e5967&quot;</span>,<br>  <span class="hljs-attr">&quot;result&quot;</span>: <span class="hljs-number">0</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>filterID：字符串类型，每次请求唯一，标记一次注册任务</li>
+<li>result：整形，返回结果。0成功，其余为失败状态码</li>
+</ul>
+<p><strong>Event Log数据推送</strong><br>节点验证客户端注册请求成功之后，根据客户端请求参数条件，向客户端推送Event Log数据。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// event log push sample:</span><br>&#123;<br>  <span class="hljs-attr">&quot;filterID&quot;</span>: <span class="hljs-string">&quot;bb31e4ec086c48e18f21cb994e2e5967&quot;</span>,<br>  <span class="hljs-attr">&quot;result&quot;</span>: <span class="hljs-number">0</span>,<br>  <span class="hljs-attr">&quot;logs&quot;</span>: [<br>    <br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>filterID：字符串类型，每次请求唯一，标记一次注册任务</li>
+<li>result：整形 0：Event Log数据推送 1：推送完成。客户端一次注册请求对应节点的数据推送会有多次（请求区块范围比较大或者等待新的区块），result字段为1时说明节点推送已经结束</li>
+<li>logs：Log对象数组，result为0时有效</li>
+</ul>
+<h3 id="3-2-JavaSDK"><a href="#3-2-JavaSDK" class="headerlink" title="3.2 JavaSDK"></a>3.2 JavaSDK</h3><p>Java SDK中org.fisco.bcos.sdk.eventsub类提供合约事件的注册接口，用户可以调用subscribeEvent向节点发送注册请求，并设置回调函数。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">String</span> <span class="hljs-title">subscribeEvent</span><span class="hljs-params">(EventLogParams params, EventCallback callback)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>事件回调请求注册的参数：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventLogParams</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> fromBlock;   <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> toBlock;<br>    <span class="hljs-keyword">private</span> List&lt;<span class="hljs-keyword">String</span>&gt; addresses;<br>    <span class="hljs-keyword">private</span> List&lt;Object&gt; topics;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>callback回调对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">EventCallback</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">onReceiveLog</span><span class="hljs-params">(<span class="hljs-keyword">int</span> status, List&lt;EventLog&gt; logs)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>status 回调返回状态：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-number">0</span>       : 正常推送，此时<span class="hljs-type">logs</span>为节点推送的事件日志<br><span class="hljs-number">1</span>       : 推送完成，执行区间的区块都已经处理<br>-<span class="hljs-number">41000</span>  : 参数无效，客户端验证参数错误返回<br>-<span class="hljs-number">41001</span>  : 参数错误，节点验证参数错误返回<br>-<span class="hljs-number">41002</span>  : 群组不存在<br>-<span class="hljs-number">41003</span>  : 请求错误的区块区间<br>-<span class="hljs-number">41004</span>  : 节点推送数据格式错误<br>-<span class="hljs-number">41005</span>  : 请求发送超时<br>-<span class="hljs-number">41006</span>  : 客户端无订阅权限<br>-<span class="hljs-number">41007</span>  : 事件尚未注册，取消订阅失败<br><span class="hljs-number">42000</span>   : 其他错误 <br><br></code></pre></td></tr></table></figure>
+<p>logs表示回调的Event Log对象列表，status为0有效。默认值null，可以在子类中通过org.fisco.bcos.sdk.abi.ABICodec解析以下EventLog对象的data字段。</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-comment">// EventLog 对象</span><br> <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventLog</span> </span>&#123;<br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> logIndex;<br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> transactionIndex;<br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> transactionHash;<br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> blockHash;<br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> blockNumber;<br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> address;<br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> data;<br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> type;<br>   <span class="hljs-keyword">private</span> List&lt;<span class="hljs-keyword">String</span>&gt; topics;<br> &#125;<br><br></code></pre></td></tr></table></figure>
+<p><strong>实现回调对象</strong><br>Java SDK对回调类EventCallback无默认实现，用户可以通过继承EventCallback类，重写onReceiveLog接口，实现自己的回调逻辑处理。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">class</span> <span class="hljs-symbol">SubscribeCallback</span> <span class="hljs-symbol">implements</span> <span class="hljs-symbol">EventCallback</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> onReceiveLog(<span class="hljs-built_in">int</span> status, List&lt;EventLog&gt; logs) &#123;<br>        <span class="hljs-comment">// ADD CODE</span><br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>topic工具</strong></p>
+<p>org.fisco.bcos.sdk.abi.TopicTools提供将各种类型参数转换为对应topic的工具，用户设置EventLogParams的topics参数可以使用。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs processing">class TopicTools &#123;<br>    <span class="hljs-comment">// int1/uint1~uint1/uint256 </span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> integerToTopic(BigInteger i)<br>    <span class="hljs-comment">// bool</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> boolToTopic(<span class="hljs-built_in">boolean</span> b)<br>    <span class="hljs-comment">// address</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> addressToTopic(<span class="hljs-keyword">String</span> s)<br>    <span class="hljs-comment">// string</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> stringToTopic(<span class="hljs-keyword">String</span> s)<br>    <span class="hljs-comment">// bytes</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> bytesToTopic(<span class="hljs-built_in">byte</span>[] b)<br>    <span class="hljs-comment">// byte1~byte32</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">String</span> byteNToTopic(<span class="hljs-built_in">byte</span>[] b)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-实例"><a href="#3-3-实例" class="headerlink" title="3.3 实例"></a>3.3 实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> org.fisco.bcos.sdk.demo.event;<br><br><span class="hljs-keyword">import</span> java.net.URL;<br><span class="hljs-keyword">import</span> java.util.ArrayList;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.concurrent.Semaphore;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.BcosSDK;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.client.Client;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.eventsub.EventCallback;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.eventsub.EventLogParams;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.eventsub.EventSubscribe;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.model.ConstantConfig;<br><span class="hljs-keyword">import</span> org.fisco.bcos.sdk.model.EventLog;<br><span class="hljs-keyword">import</span> org.slf4j.Logger;<br><span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Listen</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Logger logger = LoggerFactory.getLogger(Listen.class);<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">allEventLog</span><span class="hljs-params">()</span> </span>&#123;<br>        String configFileName = ConstantConfig.CONFIG_FILE_NAME;<br>        URL configUrl = Listen.class.getClassLoader().getResource(configFileName);<br>        <span class="hljs-keyword">if</span> (configUrl == <span class="hljs-keyword">null</span>) &#123;<br>            System.out.println(<span class="hljs-string">&quot;The configFile &quot;</span> + configFileName + <span class="hljs-string">&quot; doesn&#x27;t exist!&quot;</span>);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        String configFile = configUrl.getPath();<br>        BcosSDK sdk = BcosSDK.build(configFile);<br>        Client client = sdk.getClient(Integer.valueOf(<span class="hljs-number">1</span>));<br>        EventSubscribe eventSubscribe = sdk.getEventSubscribe(client.getGroupId());<br>        eventSubscribe.start();<br><br>        EventLogParams eventLogParams = <span class="hljs-keyword">new</span> EventLogParams();<br>        eventLogParams.setFromBlock(<span class="hljs-string">&quot;latest&quot;</span>);<br>        eventLogParams.setToBlock(<span class="hljs-string">&quot;latest&quot;</span>);<br>        eventLogParams.setAddresses(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());<br>        eventLogParams.setTopics(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());<br><br>        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SubscribeCallback</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">EventCallback</span> </span>&#123;<br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">transient</span> Semaphore semaphore = <span class="hljs-keyword">new</span> Semaphore(<span class="hljs-number">1</span>, <span class="hljs-keyword">true</span>);<br><br>            SubscribeCallback() &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    semaphore.acquire(<span class="hljs-number">1</span>);<br>                &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                    logger.error(<span class="hljs-string">&quot;error :&quot;</span>, e);<br>                    Thread.currentThread().interrupt();<br>                &#125;<br>            &#125;<br><br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onReceiveLog</span><span class="hljs-params">(<span class="hljs-keyword">int</span> status, List&lt;EventLog&gt; logs)</span> </span>&#123;<br>                String str = <span class="hljs-string">&quot;status in onReceiveLog : &quot;</span> + status;<br>                logger.debug(str);<br>                semaphore.release();<br>                <span class="hljs-keyword">if</span> (logs != <span class="hljs-keyword">null</span>) &#123;<br>                    <span class="hljs-keyword">for</span> (EventLog log : logs) &#123;<br>                        logger.debug(<br>                                <span class="hljs-string">&quot; blockNumber:&quot;</span><br>                                        + log.getBlockNumber()<br>                                        + <span class="hljs-string">&quot;,txIndex:&quot;</span><br>                                        + log.getTransactionIndex()<br>                                        + <span class="hljs-string">&quot; data:&quot;</span><br>                                        + log.getData());<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br><br>        SubscribeCallback subscribeEventCallback = <span class="hljs-keyword">new</span> SubscribeCallback();<br>        String registerId = eventSubscribe.subscribeEvent(eventLogParams, subscribeEventCallback);<br>        System.out.print(<span class="hljs-string">&quot;subscribe event, registerId is &quot;</span> + registerId);<br><br>        <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) &#123;&#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        allEventLog();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>但是实测有点问题</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/categories/FISCO-BCOS-%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8/">FISCO BCOS 开发应用</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/tool/">tool</a>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/sdk/">sdk</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/11/23/FISCO-4-%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7-%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E7%BB%84%E4%BB%B6/">
+                        <span class="hidden-mobile">FISCO-4-使用工具-区块链应用开发组件</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/events.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/nwc_bc_gogog.github.io/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/nwc_bc_gogog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/nwc_bc_gogog.github.io/js/boot.js" ></script>
+
+
+</body>
+</html>
