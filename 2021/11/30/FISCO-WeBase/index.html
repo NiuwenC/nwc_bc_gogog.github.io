@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html lang="zh_CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <link rel="icon" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#447EA5">
+  <meta name="description" content="">
+  <meta name="author" content="JackNiu">
+  <meta name="keywords" content="">
+  <meta name="description" content="1 介绍WeBASE(WeBank Blockchain Application Software Extension) 是在区块链应用和FISCO BCOS之间搭建的一套通用组件。 围绕交易、合约、密钥管理、数据、数据可视化来设计各个模块，开发者可以根据业务所需，选择子系统进行部署。WeBASE屏蔽了区块链底层的复杂度，降低开发者的门槛，大幅提高区块链应用的开发效率，包括节点前置、节点管理、交易">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FISCO-WeBase">
+<meta property="og:url" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/30/FISCO-WeBase/index.html">
+<meta property="og:site_name" content="区块链啦啦啦">
+<meta property="og:description" content="1 介绍WeBASE(WeBank Blockchain Application Software Extension) 是在区块链应用和FISCO BCOS之间搭建的一套通用组件。 围绕交易、合约、密钥管理、数据、数据可视化来设计各个模块，开发者可以根据业务所需，选择子系统进行部署。WeBASE屏蔽了区块链底层的复杂度，降低开发者的门槛，大幅提高区块链应用的开发效率，包括节点前置、节点管理、交易">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/30/FISCO-WeBase/01.png">
+<meta property="og:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/30/FISCO-WeBase/02.png">
+<meta property="og:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/30/FISCO-WeBase/03.png">
+<meta property="og:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/30/FISCO-WeBase/4.png">
+<meta property="og:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/30/FISCO-WeBase/5.png">
+<meta property="og:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/30/FISCO-WeBase/6.png">
+<meta property="article:published_time" content="2021-11-30T08:15:47.000Z">
+<meta property="article:modified_time" content="2021-12-03T06:08:11.001Z">
+<meta property="article:author" content="JackNiu">
+<meta property="article:tag" content="WeBASE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/11/30/FISCO-WeBase/01.png">
+  
+  <title>FISCO-WeBase - 区块链啦啦啦</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/nwc_bc_gogog.github.io/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/nwc_bc_gogog.github.io/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"niuwenc.github.io","root":"/nwc_bc_gogog.github.io/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/nwc_bc_gogog.github.io/local-search.xml"};
+  </script>
+  <script  src="/nwc_bc_gogog.github.io/js/utils.js" ></script>
+  <script  src="/nwc_bc_gogog.github.io/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/nwc_bc_gogog.github.io/">
+      <strong>我的区块链</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/nwc_bc_gogog.github.io/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FISCO-WeBase">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-11-30 16:15" pubdate>
+        2021年11月30日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FISCO-WeBase</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 介绍"></a>1 介绍</h2><p>WeBASE(WeBank Blockchain Application Software Extension) 是在区块链应用和FISCO BCOS之间搭建的一套通用组件。 围绕<br>交易、合约、密钥管理、数据、数据可视化来设计各个模块，开发者可以根据业务所需，选择子系统进行部署。WeBASE屏蔽了区块链底层的复杂度，降低开发者的门槛，大幅提高区块链应用的开发效率，包括节点前置、节点管理、交易链路、数据导出、Web管理等子系统。</p>
+<h3 id="建立区块链应用开发标准"><a href="#建立区块链应用开发标准" class="headerlink" title="建立区块链应用开发标准"></a>建立区块链应用开发标准</h3><p>WeBASE将区块链应用开发标准化，按照部署、配置、开发智能合约、开发应用层、在线运维管理五个步骤既可以完成一个区块链应用的开发。<a target="_blank" rel="noopener" href="https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/quick-start.html">https://webasedoc.readthedocs.io/zh_CN/latest/docs/WeBASE/quick-start.html</a></p>
+<h3 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h3><p>按需部署: WeBASE抽象应用开发的诸多共性模块，形成各类服务组件，开发者根据部署所需组件<br>微服务: WeBASE采用微服务架构，基于Spring Boot框架，提供RESTful风格接口<br>零耦合: WeBASE所有子系统独立存在，均可以独立部署，独立提供服务<br>可定制: 前端页面往往带有自身的业务属性，因此WeBASE采用前后端分离的技术，便于开发者基于后端定义自己的前端页面。</p>
+<h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><p>完整的部署如下，其中WeBASE-front需要和区块链节点同机部署。<br><img src="01.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<h3 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h3><p>从可视化，智能合约，交易，数据四个维度合计各个中间件，各模块主要功能如下</p>
+<p><img src="02.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<h3 id="各子系统介绍"><a href="#各子系统介绍" class="headerlink" title="各子系统介绍"></a>各子系统介绍</h3><h2 id="2-安装部署"><a href="#2-安装部署" class="headerlink" title="2 安装部署"></a>2 安装部署</h2><h3 id="2-1-快速入门搭建"><a href="#2-1-快速入门搭建" class="headerlink" title="2.1 快速入门搭建"></a>2.1 快速入门搭建</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//</span>osp-<span class="hljs-number">1257653870</span>.cos.ap-guangzhou.myqcloud.com<span class="hljs-regexp">/WeBASE/</span>releases<span class="hljs-regexp">/download/</span>v1.<span class="hljs-number">5.3</span>/webase-front.zip<br><br>unzip webase-front.zip<br>cd webase-front<br><br></code></pre></td></tr></table></figure>
+<p>拷贝sdk证书文件（build_chain的时候生成的）</p>
+<p>将节点所在目录nodes/${ip}/sdk下的所有文件拷贝到当前conf目录，供SDK与节点建立连接时使用（SDK会自动判断是否为国密，且是否使用国密SSL）</p>
+<ul>
+<li>链的sdk目录包含了ca.crt, sdk.crt, sdk.key和gm文件夹，gm文件夹包含了国密SSL所需的证书</li>
+<li>拷贝命令可使用cp -r nodes/${ip}/sdk/* ./conf/</li>
+<li>注，只有在建链时手动指定了-G(大写)时节点才会使用国密SSL</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">启动： <span class="hljs-keyword">bash </span>start.<span class="hljs-keyword">sh</span><br><span class="hljs-keyword"></span>停止： <span class="hljs-keyword">bash </span>stop.<span class="hljs-keyword">sh</span><br><span class="hljs-keyword"></span>检查： <span class="hljs-keyword">bash </span>status.<span class="hljs-keyword">sh </span><br><br></code></pre></td></tr></table></figure>
+<p>访问: <a target="_blank" rel="noopener" href="http://localhost:5002/WeBASE-Front">http://localhost:5002/WeBASE-Front</a> </p>
+<h3 id="一键部署"><a href="#一键部署" class="headerlink" title="一键部署"></a>一键部署</h3><p>一键部署可以在 同机 快速搭建WeBASE管理台环境，方便用户快速体验WeBASE管理平台。</p>
+<p>​ 一键部署会搭建：节点（FISCO-BCOS 2.0+）、管理平台（WeBASE-Web）、节点管理子系统（WeBASE-Node-Manager）、节点前置子系统（WeBASE-Front）、签名服务（WeBASE-Sign）。其中，节点的搭建是可选的，可以通过配置来选择使用已有链或者搭建新链。一键部署架构如下：<br><img src="03.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//</span>osp-<span class="hljs-number">1257653870</span>.cos.ap-guangzhou.myqcloud.com<span class="hljs-regexp">/WeBASE/</span>releases<span class="hljs-regexp">/download/</span>v1.<span class="hljs-number">5.3</span>/webase-deploy.zip<br>unzip webase-deploy.zip<br>cd webase-deploy<br></code></pre></td></tr></table></figure>
+
+
+<p>修改后的配置文件common.properties</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><code class="hljs clean">[common]<br><br># Webase Subsystem Version (v1<span class="hljs-number">.1</span><span class="hljs-number">.0</span> or above)<br>webase.web.version=v1<span class="hljs-number">.5</span><span class="hljs-number">.3</span><br>webase.mgr.version=v1<span class="hljs-number">.5</span><span class="hljs-number">.3</span><br>webase.sign.version=v1<span class="hljs-number">.5</span><span class="hljs-number">.3</span><br>webase.front.version=v1<span class="hljs-number">.5</span><span class="hljs-number">.3</span><br><br>#####################################################################<br># <span class="hljs-keyword">if</span> use [installDockerAll] to install WeBASE by docker<br># <span class="hljs-keyword">if</span> use [installAll] or [installWeBASE], ignore configuration here<br><br># <span class="hljs-number">1</span>: enable mysql <span class="hljs-keyword">in</span> docker<br># <span class="hljs-number">0</span>: mysql run <span class="hljs-keyword">in</span> host, required fill <span class="hljs-keyword">in</span> the configuration <span class="hljs-keyword">of</span> webase-node-mgr and webase-sign<br>docker.mysql=<span class="hljs-number">0</span><br><br># <span class="hljs-keyword">if</span> [docker.mysql=<span class="hljs-number">1</span>], mysql run <span class="hljs-keyword">in</span> host (only works <span class="hljs-keyword">in</span> [installDockerAll])<br># run mysql <span class="hljs-number">5.6</span> by docker<br>docker.mysql.port=<span class="hljs-number">23306</span><br># default user [root]<br>docker.mysql.password=<span class="hljs-number">123456</span><br>#####################################################################<br><br># Mysql database configuration <span class="hljs-keyword">of</span> WeBASE-Node-Manager<br>mysql.ip=<span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.46</span><br>mysql.port=<span class="hljs-number">3306</span><br>mysql.user=bigdata<br>mysql.password=Bigdata@<span class="hljs-number">2019</span><br>mysql.database=webasenodemanager<br><br># Mysql database configuration <span class="hljs-keyword">of</span> WeBASE-Sign<br>sign.mysql.ip=<span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.46</span><br>sign.mysql.port=<span class="hljs-number">3306</span><br>sign.mysql.user=bigdata<br>sign.mysql.password=Bigdata@<span class="hljs-number">2019</span><br>sign.mysql.database=webasesign<br># <span class="hljs-keyword">if</span> docker mysql disabled[docker.mysql=<span class="hljs-number">0</span>] above<br><br># H2 database name <span class="hljs-keyword">of</span> WeBASE-Front (docker mode ignore this)<br>front.h2.name=webasefront<br>front.org=fisco<br><br># WeBASE-Web service port <br>web.port=<span class="hljs-number">5000</span><br># enable WeBASE-Web overview pages for mobile phone(docker mode not support h5 yet)<br># (<span class="hljs-number">0</span>: disable, <span class="hljs-number">1</span>: enable)<br>web.h5.enable=<span class="hljs-number">1</span><br><br># WeBASE-Node-Manager service port<br>mgr.port=<span class="hljs-number">5001</span><br><br># WeBASE-Front service port<br>front.port=<span class="hljs-number">5002</span><br><br># WeBASE-Sign service port<br>sign.port=<span class="hljs-number">5004</span><br><br># Node listening IP<br>node.listenIp=<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><br># Node p2p service port<br>node.p2pPort=<span class="hljs-number">30300</span><br># Node channel service port<br>node.channelPort=<span class="hljs-number">20200</span><br># Node rpc service port<br>node.rpcPort=<span class="hljs-number">8545</span><br><br># Encrypt type (<span class="hljs-number">0</span>: standard, <span class="hljs-number">1</span>: guomi)<br>encrypt.type=<span class="hljs-number">0</span><br># ssl encrypt type (<span class="hljs-number">0</span>: standard ssl, <span class="hljs-number">1</span>: guomi ssl)<br># only guomi type support guomi ssl<br>encrypt.sslType=<span class="hljs-number">0</span><br><br># Use existing chain or not (yes/no)<br><span class="hljs-keyword">if</span>.exist.fisco=no<br><br>### <span class="hljs-keyword">if</span> build new chain, [<span class="hljs-keyword">if</span>.exist.fisco=no]<br># Configuration required when building a new chain <br># Fisco-bcos version<br>fisco.version=<span class="hljs-number">2.8</span><span class="hljs-number">.0</span><br># Number <span class="hljs-keyword">of</span> building nodes (default value: <span class="hljs-number">2</span>)<br>node.counts=nodeCounts<br><br>### <span class="hljs-keyword">if</span> using exited chain, [<span class="hljs-keyword">if</span>.exist.fisco=yes]<br># The path <span class="hljs-keyword">of</span> the existing chain, the path <span class="hljs-keyword">of</span> the start_all.sh script<br># Under the path, there should be a <span class="hljs-string">&#x27;sdk&#x27;</span> directory <span class="hljs-keyword">where</span> the SDK certificates (ca.crt, sdk.crt, node.key and gm directory(gm ssl)) are stored<br>fisco.dir=/data/app/nodes/<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><br># Node directory <span class="hljs-keyword">in</span> [fisco.dir] for WeBASE-Front to connect <br># example: <span class="hljs-string">&#x27;node.dir=node0&#x27;</span> would auto change to <span class="hljs-string">&#x27;/data/app/nodes/127.0.0.1/node0&#x27;</span><br># Under the path, there is a conf directory <span class="hljs-keyword">where</span> node certificates (ca.crt, node.crt and node.key) are stored<br>node.dir=node0<br><br><br><br></code></pre></td></tr></table></figure>
+<p>启动</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">python3</span> deploy.<span class="hljs-keyword">py</span>  installAll<br></code></pre></td></tr></table></figure>
+
+<p>访问:<br>http://{deployIP}:{webPort}<br>示例：<a target="_blank" rel="noopener" href="http://localhost:5000/">http://localhost:5000</a></p>
+<p>用户名: admin  密码: Sxw123</p>
+<h2 id="WeBASE管理平台使用手册"><a href="#WeBASE管理平台使用手册" class="headerlink" title="WeBASE管理平台使用手册"></a>WeBASE管理平台使用手册</h2><h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3><p>主要功能</p>
+<ul>
+<li>区块链数据概览</li>
+<li>节点管理</li>
+<li>合约管理</li>
+<li>私钥管理</li>
+<li>应用管理</li>
+<li>系统管理</li>
+<li>系统监控</li>
+<li>交易审计</li>
+<li>订阅事件</li>
+<li>账号管理</li>
+<li>群组管理</li>
+<li>移动端管理台</li>
+<li>数据监控大屏</li>
+</ul>
+<p><img src="4.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<p>CNS查询：CNS（Contract Name Service）是通过提供链上合约名称与合约地址映射关系的记录及相应的查询功能，方便调用者通过记忆简单的合约名来实现对链上合约的调用。详情可查看FISCO-BCOS文档的 CNS方案</p>
+<h4 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h4><p>系统管理目前支持权限管理、系统配置管理、证书管理的功能</p>
+<h4 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h4><p>基于FISCO BCOS 2.5.0 及以上版本的基于角色的权限管理: 支持链委员会管理和运维管理员管理</p>
+<ul>
+<li>链委员会管理: 链委员会的修改操作均需要通过多个委员会投票完成，链委员会拥有投票权，可以增删节点，修改链配置，添加撤销运维，冻结节约合约，对用户表的写权限控制；<ul>
+<li>修改委员会成员(新增、撤销委员)、修改委员会投票阈值、修改委员会投票权重等操作均通过投票进行修改。</li>
+<li>投票阈值为投票生效的阈值，有效投票权重数/委员总权重数&gt;生效阈值投票才能生效，阈值为开区间，即：投票权重比例必须大于阈值（不包含等于）；</li>
+<li>每次投票操作，如果是委员投票，则记录操作内容和投票委员，不重复计票；</li>
+<li>票设置过期时间，根据块高，blockLimit的10倍(即10000)，固定不可改；</li>
+<li>用户不能同时成为链委员和运维管理员；</li>
+</ul>
+</li>
+</ul>
+<h4 id="运维管理"><a href="#运维管理" class="headerlink" title="运维管理:"></a>运维管理:</h4><p>维由链委员直接赋予（无需通过投票赋予），运维可以部署合约、创建表、管理合约版本、冻结解冻本账号部署的合约；</p>
+<p>注：链委员会为空时，不作链委员会权限限制，所有用户拥有委员权限，可以自由给自身或其他用户添加链委员权限；设置了第一个链委员后，非链委员用户无权限；请妥善保管链委员的私钥！<br>运维管理员为空时，所有用户拥有运维权限；同理，设置了第一个运维管理员后，非运维用户无权限；</p>
+<p>FISCO-BCOS基于角色的权限管理机制详情可以参考文档使用手册-基于角色的权限控制，具体的设计原理可以参考文档 系统设计-基于角色的权限控制</p>
+<p><a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/permission_control.html#id2">https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/permission_control.html#id2</a></p>
+<p><a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/security_control/chain_governance.html">https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/design/security_control/chain_governance.html</a></p>
+<h4 id="证书说明："><a href="#证书说明：" class="headerlink" title="证书说明："></a>证书说明：</h4><p>FISCO-BCOS证书说明可以参考FISCO-BCOS使用手册的证书说明<br><a target="_blank" rel="noopener" href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificates.html">https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/certificates.html</a></p>
+<h4 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h4><p>应用管理是WeBASE管理台提供的一种第三方应用接入功能。WeBASE作为底层运维平台，已经有了底层运维基础能力。各个应用可以利用这些基础能力来开发自己的运维管理台。这些可以利用的基础能力主要包括四个方面：1、链信息和链运维（权限，配置等）；2、合约；3、链的私钥账号；4、管理账号(登陆状态)</p>
+<p><img src="5.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<ol>
+<li>各应用的进程管理还是自我管理，避免WeBASE过于笨重</li>
+<li>WeBASE提供的是规范，方便其他应用参考打通应用与WeBASE的联系</li>
+<li>如果有扩展，WeBASE也方便提供API来实现</li>
+<li>不破坏各应用自身的完整性</li>
+</ol>
+<p><img src="6.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<p><a target="_blank" rel="noopener" href="https://weidentity.readthedocs.io/zh_CN/latest/docs/deploy-via-web.html">https://weidentity.readthedocs.io/zh_CN/latest/docs/deploy-via-web.html</a><br>WeIdentity目前主要包含两大模块：WeIdentity DID以及WeIdentity Credential。 WeIdentity DID模块在FISCO-BCOS区块链底层平台上实现了一套符合W3C DID规范的分布式多中心的身份标识协议，使实体（人或物）的现实身份实现了链上的身份标识；WeIdentity Credential提供了一整套基于W3C VC规范的解决方案，旨在对这一类数据进行标准化、电子化，生成可验证、可交换的「凭证」（Credential），支持对凭证的属性进行选择性披露，及生成链上存证（Evidence）。</p>
+<p><a target="_blank" rel="noopener" href="https://weidentity.readthedocs.io/zh_CN/latest/docs/deploy-via-web.html">https://weidentity.readthedocs.io/zh_CN/latest/docs/deploy-via-web.html</a></p>
+<h4 id="交易审计"><a href="#交易审计" class="headerlink" title="交易审计"></a>交易审计</h4><p>联盟链中各个机构按照联盟委员会制定的规章在链上共享和流转数据。这些规章往往是字面的，大家是否遵守缺乏监管和审计。因此为了规范大家的使用方式，避免链的计算资源和存储资源被某些机构滥用，急需一套服务来辅助监管和审计链上的行为。交易审计就是结合上面的区块链数据，私钥管理和合约管理三者的数据，以区块链数据为原材料，以私钥管理和合约管理为依据做的一个综合性的数据分析功能。 交易审计提供可视化的去中心合约部署和交易监控、审计功能，方便识别链资源被滥用的情况，为联盟链治理提供依据。</p>
+<p>交易审计的主要目标:</p>
+<ul>
+<li>用户交易总量数量统计： 监控链上各个外部交易账号的每日交易量</li>
+<li>用户子类交易数量共计: 监控链上各个外部交易账号的每种类型的每日交易量</li>
+<li>异常交易用户监控: 监控链上出现的异常交易用户(没有在区块链中间件平台登记的交易用户)</li>
+<li>异常合约部署监控: 监控链上合约的部署情况，非白名单合约(没有在区块链中间件平台登记的合约)记录。</li>
+</ul>
+<h4 id="订阅事件"><a href="#订阅事件" class="headerlink" title="订阅事件"></a>订阅事件</h4><p>订阅事件管理: 可以查看前置中已订阅的链上事件通知，包括出块事件列表和合约Event事件列表。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/categories/FISCO-BCOS/">FISCO BCOS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/WeBASE/">WeBASE</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/03/FISCO-WeBase-%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">FISCO-WeBase-应用管理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/11/30/FISCO-8-%E6%A1%88%E4%BE%8B/">
+                        <span class="hidden-mobile">FISCO-8-案例</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/events.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/nwc_bc_gogog.github.io/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/nwc_bc_gogog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/nwc_bc_gogog.github.io/js/boot.js" ></script>
+
+
+</body>
+</html>
