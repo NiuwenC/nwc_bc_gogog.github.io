@@ -1,0 +1,500 @@
+
+
+<!DOCTYPE html>
+<html lang="zh_CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <link rel="icon" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#447EA5">
+  <meta name="description" content="">
+  <meta name="author" content="JackNiu">
+  <meta name="keywords" content="">
+  <meta name="description" content="FISCO BCOS 证书管理FISCO BCOS网络采用面向CA的准入机制，支持任意多级的证书结构，保障信息保密性、认证性、完整性、不可抵赖性。 FISCO BCOS 使用x509协议的证书格式，默认采用三级证书结构， 链证书，机构证书，节点证书。 机构的证书请求文件: agency.csr, 签发机构证书 agency.crt 机构私钥由机构管理员持有，可以对机构下属节点签发节点证书。 节点证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FISCO-7-证书管理">
+<meta property="og:url" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/12/08/FISCO-7-%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="区块链啦啦啦">
+<meta property="og:description" content="FISCO BCOS 证书管理FISCO BCOS网络采用面向CA的准入机制，支持任意多级的证书结构，保障信息保密性、认证性、完整性、不可抵赖性。 FISCO BCOS 使用x509协议的证书格式，默认采用三级证书结构， 链证书，机构证书，节点证书。 机构的证书请求文件: agency.csr, 签发机构证书 agency.crt 机构私钥由机构管理员持有，可以对机构下属节点签发节点证书。 节点证">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/12/08/FISCO-7-%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86/01.png">
+<meta property="article:published_time" content="2021-12-08T05:55:13.000Z">
+<meta property="article:modified_time" content="2021-12-08T06:42:46.516Z">
+<meta property="article:author" content="JackNiu">
+<meta property="article:tag" content="网络搭建">
+<meta property="article:tag" content="证书管理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/12/08/FISCO-7-%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86/01.png">
+  
+  <title>FISCO-7-证书管理 - 区块链啦啦啦</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/nwc_bc_gogog.github.io/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/nwc_bc_gogog.github.io/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"niuwenc.github.io","root":"/nwc_bc_gogog.github.io/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/nwc_bc_gogog.github.io/local-search.xml"};
+  </script>
+  <script  src="/nwc_bc_gogog.github.io/js/utils.js" ></script>
+  <script  src="/nwc_bc_gogog.github.io/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/nwc_bc_gogog.github.io/">
+      <strong>我的区块链</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/nwc_bc_gogog.github.io/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FISCO-7-证书管理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-08 13:55" pubdate>
+        2021年12月8日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FISCO-7-证书管理</h1>
+            
+            <div class="markdown-body">
+              <h2 id="FISCO-BCOS-证书管理"><a href="#FISCO-BCOS-证书管理" class="headerlink" title="FISCO BCOS 证书管理"></a>FISCO BCOS 证书管理</h2><p>FISCO BCOS网络采用面向CA的准入机制，支持任意多级的证书结构，保障信息保密性、认证性、完整性、不可抵赖性。</p>
+<p>FISCO BCOS 使用x509协议的证书格式，默认采用三级证书结构， 链证书，机构证书，节点证书。</p>
+<p>机构的证书请求文件: agency.csr, 签发机构证书 agency.crt</p>
+<p>机构私钥由机构管理员持有，可以对机构下属节点签发节点证书。</p>
+<p>节点证书是节点身份的凭证，用于与其他持有合法证书的节点间 建立SSL连接，并进行加密通讯。</p>
+<p>sdk证书是sdk与节点通讯的凭着，机构生成SDK证书，运行sdk与节点进行通讯。</p>
+<p><img src="01.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<pre><code>.key   私钥文件
+.crt   证书文件
+.csr   证书请求文件
+</code></pre>
+<h2 id="角色定义"><a href="#角色定义" class="headerlink" title="角色定义"></a>角色定义</h2><p>FISCO BCOS的证书结构中，共有四种角色，分别是联盟链委员会管理员、机构、节点和SDK</p>
+<h3 id="联盟链委员会"><a href="#联盟链委员会" class="headerlink" title="联盟链委员会"></a>联盟链委员会</h3><p>联盟链委员会管理链的私钥，并根据机构的证书请求文件 agency.csr 为机构颁发机构证书</p>
+<pre><code>ca.crt
+ca.key
+</code></pre>
+<p>FISCO BCOS 进行ssl加密通信时，拥有相同链证书ca.crt 的节点才可以建立连接。<br>链证书ca.crt在节点，sdk 和机构中都是一样的。</p>
+<h3 id="机构"><a href="#机构" class="headerlink" title="机构"></a>机构</h3><p>机构管理员管理机构的私钥，可以颁发节点证书和SDK证书</p>
+<pre><code>ca.crt 链证书
+agency.crt 机构证书
+agency.csr 机构证书请求文件
+agency.key 机构密钥
+</code></pre>
+<h3 id="节点-SDK"><a href="#节点-SDK" class="headerlink" title="节点/SDK"></a>节点/SDK</h3><ul>
+<li>FISCO BCOS节点包括节点证书和私钥，用于建立节点间SSL加密连接</li>
+<li>SDK包括SDK证书和私钥，用于与区块链节点建立SSL加密连接。</li>
+</ul>
+<pre><code>ca.crt 链证书
+node.crt 节点证书
+node.key 节点密钥
+sdk.crt  sdk证书
+sdk.key  sdk私钥
+</code></pre>
+<h2 id="证书生成过程"><a href="#证书生成过程" class="headerlink" title="证书生成过程"></a>证书生成过程</h2><pre><code>./generator --generate_chain_certificate ./dir_chain_ca
+./generator --generate_agency_certificate ./dir_agency_ca ./dir_chain_ca SXCZ
+./generator --generate_node_certificate ./dir_node_ca ./dir_agency_ca/SXCZ/  20050
+./generator --generate_sdk_certificate ./dir_sdk_ca ./dir_agency_ca/SXCZ/
+</code></pre>
+<h3 id="1-链文件"><a href="#1-链文件" class="headerlink" title="1 链文件"></a>1 链文件</h3><p>ca.crt</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck">--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBvTCCAWKgAwIBAgIJAKqHVTSzAvyhMAoGCCqGSM49BAMCMDwxFTATBgNVBAMM</span><br><span class="hljs-comment">DGRpcl9jaGFpbl9jYTETMBEGA1UECgwKZmlzY28tYmNvczEOMAwGA1UECwwFY2hh</span><br><span class="hljs-comment">aW4wHhcNMjExMjA4MDYyMzE0WhcNMzExMjA2MDYyMzE0WjA8MRUwEwYDVQQDDAxk</span><br><span class="hljs-comment">aXJfY2hhaW5fY2ExEzARBgNVBAoMCmZpc2NvLWJjb3MxDjAMBgNVBAsMBWNoYWlu</span><br><span class="hljs-comment">MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE6lC0Uymwo</span><span class="hljs-literal">+</span><span class="hljs-comment">333YT1io3Jg7</span><span class="hljs-literal">+</span><span class="hljs-comment">sfDbuMpEy</span><br><span class="hljs-comment">zBLon5Jqax1t7gJFzHJ5W5laejeQXDg12Dm6UwmSydcwd9Ceb63pBaNQME4wHQYD</span><br><span class="hljs-comment">VR0OBBYEFG4ViSzmo</span><span class="hljs-literal">+</span><span class="hljs-comment">jw3KSCRVcFCsHwg0TDMB8GA1UdIwQYMBaAFG4ViSzmo</span><span class="hljs-literal">+</span><span class="hljs-comment">jw</span><br><span class="hljs-comment">3KSCRVcFCsHwg0TDMAwGA1UdEwQFMAMBAf8wCgYIKoZIzj0EAwIDSQAwRgIhAPIr</span><br><span class="hljs-comment">jnSV45mOdZupoNl8V4xF1aocmrzqrheb7F3yBl6JAiEA6RyZVnPOzlfUmEMwQRyU</span><br><span class="hljs-comment">V6jLwHbYnjgnqeJIPxTMg5E=</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br></code></pre></td></tr></table></figure>
+<p>ca.key</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">-----BEGIN <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br>MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQgt9mHXE4p0wRHauvPUW9g<br>NstV/sJXIcLzjJK80PYlLzOhRANCAATqULRTKbCj7ffdhPWKjcmDv6x8Nu4ykTLM<br>EuifkmprHW3uAkXMcnlbmVp6N5BcODXYObpTCZLJ1zB30J5vrekF<br>-----<span class="hljs-keyword">END</span> <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br></code></pre></td></tr></table></figure>
+<p>ca.srl</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">897414A4DC2677CF<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-机构"><a href="#2-机构" class="headerlink" title="2 机构"></a>2 机构</h3><p>ca.crt</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck">--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBvTCCAWKgAwIBAgIJAKqHVTSzAvyhMAoGCCqGSM49BAMCMDwxFTATBgNVBAMM</span><br><span class="hljs-comment">DGRpcl9jaGFpbl9jYTETMBEGA1UECgwKZmlzY28tYmNvczEOMAwGA1UECwwFY2hh</span><br><span class="hljs-comment">aW4wHhcNMjExMjA4MDYyMzE0WhcNMzExMjA2MDYyMzE0WjA8MRUwEwYDVQQDDAxk</span><br><span class="hljs-comment">aXJfY2hhaW5fY2ExEzARBgNVBAoMCmZpc2NvLWJjb3MxDjAMBgNVBAsMBWNoYWlu</span><br><span class="hljs-comment">MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE6lC0Uymwo</span><span class="hljs-literal">+</span><span class="hljs-comment">333YT1io3Jg7</span><span class="hljs-literal">+</span><span class="hljs-comment">sfDbuMpEy</span><br><span class="hljs-comment">zBLon5Jqax1t7gJFzHJ5W5laejeQXDg12Dm6UwmSydcwd9Ceb63pBaNQME4wHQYD</span><br><span class="hljs-comment">VR0OBBYEFG4ViSzmo</span><span class="hljs-literal">+</span><span class="hljs-comment">jw3KSCRVcFCsHwg0TDMB8GA1UdIwQYMBaAFG4ViSzmo</span><span class="hljs-literal">+</span><span class="hljs-comment">jw</span><br><span class="hljs-comment">3KSCRVcFCsHwg0TDMAwGA1UdEwQFMAMBAf8wCgYIKoZIzj0EAwIDSQAwRgIhAPIr</span><br><span class="hljs-comment">jnSV45mOdZupoNl8V4xF1aocmrzqrheb7F3yBl6JAiEA6RyZVnPOzlfUmEMwQRyU</span><br><span class="hljs-comment">V6jLwHbYnjgnqeJIPxTMg5E=</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br></code></pre></td></tr></table></figure>
+
+<p>agency.crt</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck">--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBdjCCARugAwIBAgIJAIl0FKTcJnfPMAoGCCqGSM49BAMCMDwxFTATBgNVBAMM</span><br><span class="hljs-comment">DGRpcl9jaGFpbl9jYTETMBEGA1UECgwKZmlzY28tYmNvczEOMAwGA1UECwwFY2hh</span><br><span class="hljs-comment">aW4wHhcNMjExMjA4MDYyNDEyWhcNMzExMjA2MDYyNDEyWjA1MQ0wCwYDVQQDDART</span><br><span class="hljs-comment">WENaMRMwEQYDVQQKDApmaXNjby1iY29zMQ8wDQYDVQQLDAZhZ2VuY3kwVjAQBgcq</span><br><span class="hljs-comment">hkjOPQIBBgUrgQQACgNCAARsfoTWF</span><span class="hljs-literal">+</span><span class="hljs-comment">pt4ku2v5N6nKac8dGLzAXtDO41xxwuUjmQ</span><br><span class="hljs-comment">6grfLtPdgGxNXwbVjAxiVQCqDloiRCoqoLJHWQBVGYN4oxAwDjAMBgNVHRMEBTAD</span><br><span class="hljs-comment">AQH/MAoGCCqGSM49BAMCA0kAMEYCIQDuesdsVVKZJ8sZSVFaTbyaBqxDZVUAZH7B</span><br><span class="hljs-comment">jDsrud3X7QIhAOtNBs2TbegkXQJt5q2gx8m9tQZmiYlTrWoq</span><span class="hljs-literal">+</span><span class="hljs-comment">NQaWUZT</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br></code></pre></td></tr></table></figure>
+
+<p>agency.key</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">-----BEGIN <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br>MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQgubrDtrPn7WQqm8T/wmsc<br>O+XVQ3LQZ6WyksxKckqur1mhRANCAARsfoTWF+pt4ku2v5N6nKac8dGLzAXtDO41<br>xxwuUjmQ6grfLtPdgGxNXwbVjAxiVQCqDloiRCoqoLJHWQBVGYN4<br>-----<span class="hljs-keyword">END</span> <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br></code></pre></td></tr></table></figure>
+
+
+<p>agency.srl</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">A7C2D5E020C18DBC<br></code></pre></td></tr></table></figure>
+
+<h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h3><p>ca.crt</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck">--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBvTCCAWKgAwIBAgIJAKqHVTSzAvyhMAoGCCqGSM49BAMCMDwxFTATBgNVBAMM</span><br><span class="hljs-comment">DGRpcl9jaGFpbl9jYTETMBEGA1UECgwKZmlzY28tYmNvczEOMAwGA1UECwwFY2hh</span><br><span class="hljs-comment">aW4wHhcNMjExMjA4MDYyMzE0WhcNMzExMjA2MDYyMzE0WjA8MRUwEwYDVQQDDAxk</span><br><span class="hljs-comment">aXJfY2hhaW5fY2ExEzARBgNVBAoMCmZpc2NvLWJjb3MxDjAMBgNVBAsMBWNoYWlu</span><br><span class="hljs-comment">MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE6lC0Uymwo</span><span class="hljs-literal">+</span><span class="hljs-comment">333YT1io3Jg7</span><span class="hljs-literal">+</span><span class="hljs-comment">sfDbuMpEy</span><br><span class="hljs-comment">zBLon5Jqax1t7gJFzHJ5W5laejeQXDg12Dm6UwmSydcwd9Ceb63pBaNQME4wHQYD</span><br><span class="hljs-comment">VR0OBBYEFG4ViSzmo</span><span class="hljs-literal">+</span><span class="hljs-comment">jw3KSCRVcFCsHwg0TDMB8GA1UdIwQYMBaAFG4ViSzmo</span><span class="hljs-literal">+</span><span class="hljs-comment">jw</span><br><span class="hljs-comment">3KSCRVcFCsHwg0TDMAwGA1UdEwQFMAMBAf8wCgYIKoZIzj0EAwIDSQAwRgIhAPIr</span><br><span class="hljs-comment">jnSV45mOdZupoNl8V4xF1aocmrzqrheb7F3yBl6JAiEA6RyZVnPOzlfUmEMwQRyU</span><br><span class="hljs-comment">V6jLwHbYnjgnqeJIPxTMg5E=</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br></code></pre></td></tr></table></figure>
+
+<p>node.crt</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-params">-----BEGIN</span> CERTIFICATE<span class="hljs-params">-----</span><br>MIIBdzCCAR2gAwIBAgIJAKfC1eAgwY27MAoGCCqGSM49BAMCMDUxDTALBgNVBAMM<br>BFNYQ1oxEzARBgNVBAoMCmZpc2NvLWJjb3MxDzANBgNVBAsMBmFnZW5jeTAeFw0y<br>MTEyMDgwNjI2MTRaFw0zMTEyMDYwNjI2MTRaMDQxDjAMBgNVBAMMBTIwMDUwMRMw<br>EQYDVQQKDApmaXNjby1iY29zMQ0wCwYDVQQLDARub2RlMFYwEAYHKoZIzj0CAQYF<br>K4EEAAoDQgAEALSYDNLLGCBu2gMl/AZ0u4A9F8Jh4ee469q5V97spDT+wvKTYTND<br>O8ebjHv1WlWVP6buf5Lv1<span class="hljs-keyword">ls</span>2ZcSzhtFARaMaMBgwCQYDVR0TBAIwADALBgNVHQ8E<br>BAMCBeAwCgYIKoZIzj0EAwIDSAAwRQIgL4iQpjXxHxK7P8wRpfT2IkMwHDjm0ZOL<br>7rm4c5h4ZDkCIQCHG6ReLamM8BXai/v90dOeffBEM3PWs+BrkrwEZkQRlQ==<br><span class="hljs-params">-----END</span> CERTIFICATE<span class="hljs-params">-----</span><br><span class="hljs-params">-----BEGIN</span> CERTIFICATE<span class="hljs-params">-----</span><br>MIIBdjCCARugAwIBAgIJAIl0FKTcJnfPMAoGCCqGSM49BAMCMDwxFTATBgNVBAMM<br>DGRpcl9jaGFpbl9jYTETMBEGA1UECgwKZmlzY28tYmNvczEOMAwGA1UECwwFY2hh<br>aW4wHhcNMjExMjA4MDYyNDEyWhcNMzExMjA2MDYyNDEyWjA1MQ0wCwYDVQQDDART<br>WENaMRMwEQYDVQQKDApmaXNjby1iY29zMQ8wDQYDVQQLDAZhZ2VuY3kwVjAQBgcq<br>hkjOPQIBBgUrgQQACgNCAARsfoTWF+pt4ku2v5N6nKac8dGLzAXtDO41xxwuUjmQ<br>6grfLtPdgGxNXwbVjAxiVQCqDloiRCoqoLJHWQBVGYN4oxAwDjAMBgNVHRMEBTAD<br>AQH/MAoGCCqGSM49BAMCA0kAMEYCIQDuesdsVVKZJ8sZSVFaTbyaBqxDZVUAZH7B<br>jDsrud3X7QIhAOtNBs2TbegkXQJt5q2gx8m9tQZmiYlTrWoq+NQaWUZT<br><span class="hljs-params">-----END</span> CERTIFICATE<span class="hljs-params">-----</span><br><br></code></pre></td></tr></table></figure>
+
+<p>node.key</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">-----<span class="hljs-keyword">BEGIN</span> PRIVATE KEY-----<br>MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQgZrCWtQBPzFTXkXt1zvR8<br>TXhDIMRB5quzdvSdX8UfjrOhRANCAAQAtJgM0ssYIG7aAyX8BnS7gD0XwmHh57jr<br><span class="hljs-number">2</span>rlX3uykNP7C8pNhM0M7x5uMe<span class="hljs-regexp">/VaVZU/</span>pu5<span class="hljs-regexp">/ku/</span>WWzZlxLOG0UBF<br>-----<span class="hljs-keyword">END</span> PRIVATE KEY-----<br></code></pre></td></tr></table></figure>
+
+<p>node.nodeid</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs llvm"><span class="hljs-number">00</span>b<span class="hljs-number">4980</span>cd<span class="hljs-number">2</span>cb<span class="hljs-number">18206</span>eda<span class="hljs-number">0325</span>fc<span class="hljs-number">0674</span>bb<span class="hljs-number">803</span>d<span class="hljs-number">17</span><span class="hljs-keyword">c</span><span class="hljs-number">261e1</span>e<span class="hljs-number">7</span>b<span class="hljs-number">8</span>ebdab<span class="hljs-number">957</span>deeca<span class="hljs-number">434</span>fec<span class="hljs-number">2</span>f<span class="hljs-number">2936133433</span>bc<span class="hljs-number">79</span>b<span class="hljs-number">8</span><span class="hljs-keyword">c</span><span class="hljs-number">7</span>bf<span class="hljs-number">55</span>a<span class="hljs-number">55953</span>fa<span class="hljs-number">6</span>ee<span class="hljs-number">7</span>f<span class="hljs-number">92</span>efd<span class="hljs-number">65</span>b<span class="hljs-number">3665</span><span class="hljs-keyword">c</span><span class="hljs-number">4</span>b<span class="hljs-number">386</span>d<span class="hljs-number">14045</span><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="SDK"><a href="#SDK" class="headerlink" title="SDK"></a>SDK</h3><p>ca.crt</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck">--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBvTCCAWKgAwIBAgIJAKqHVTSzAvyhMAoGCCqGSM49BAMCMDwxFTATBgNVBAMM</span><br><span class="hljs-comment">DGRpcl9jaGFpbl9jYTETMBEGA1UECgwKZmlzY28tYmNvczEOMAwGA1UECwwFY2hh</span><br><span class="hljs-comment">aW4wHhcNMjExMjA4MDYyMzE0WhcNMzExMjA2MDYyMzE0WjA8MRUwEwYDVQQDDAxk</span><br><span class="hljs-comment">aXJfY2hhaW5fY2ExEzARBgNVBAoMCmZpc2NvLWJjb3MxDjAMBgNVBAsMBWNoYWlu</span><br><span class="hljs-comment">MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE6lC0Uymwo</span><span class="hljs-literal">+</span><span class="hljs-comment">333YT1io3Jg7</span><span class="hljs-literal">+</span><span class="hljs-comment">sfDbuMpEy</span><br><span class="hljs-comment">zBLon5Jqax1t7gJFzHJ5W5laejeQXDg12Dm6UwmSydcwd9Ceb63pBaNQME4wHQYD</span><br><span class="hljs-comment">VR0OBBYEFG4ViSzmo</span><span class="hljs-literal">+</span><span class="hljs-comment">jw3KSCRVcFCsHwg0TDMB8GA1UdIwQYMBaAFG4ViSzmo</span><span class="hljs-literal">+</span><span class="hljs-comment">jw</span><br><span class="hljs-comment">3KSCRVcFCsHwg0TDMAwGA1UdEwQFMAMBAf8wCgYIKoZIzj0EAwIDSQAwRgIhAPIr</span><br><span class="hljs-comment">jnSV45mOdZupoNl8V4xF1aocmrzqrheb7F3yBl6JAiEA6RyZVnPOzlfUmEMwQRyU</span><br><span class="hljs-comment">V6jLwHbYnjgnqeJIPxTMg5E=</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br></code></pre></td></tr></table></figure>
+<p>node.crt</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck">--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBdjCCARugAwIBAgIJAKfC1eAgwY28MAoGCCqGSM49BAMCMDUxDTALBgNVBAMM</span><br><span class="hljs-comment">BFNYQ1oxEzARBgNVBAoMCmZpc2NvLWJjb3MxDzANBgNVBAsMBmFnZW5jeTAeFw0y</span><br><span class="hljs-comment">MTEyMDgwNjI2MzhaFw0zMTEyMDYwNjI2MzhaMDIxDDAKBgNVBAMMA3NkazETMBEG</span><br><span class="hljs-comment">A1UECgwKZmlzY28tYmNvczENMAsGA1UECwwEbm9kZTBWMBAGByqGSM49AgEGBSuB</span><br><span class="hljs-comment">BAAKA0IABHyLP0</span><span class="hljs-literal">+</span><span class="hljs-comment">KKP8kinKSQG68DiufwmeNDiB</span><span class="hljs-literal">+</span><span class="hljs-comment">S2DVnqnA</span><span class="hljs-literal">+</span><span class="hljs-comment">5eXhFafSD3JZ61i</span><br><span class="hljs-comment">iQRuHtoV9TqQ7cEXhyG2vYYedXFgknijGjAYMAkGA1UdEwQCMAAwCwYDVR0PBAQD</span><br><span class="hljs-comment">AgXgMAoGCCqGSM49BAMCA0kAMEYCIQCmtb2BkLWRo3B/RLMJoMTB/2XZW9/GwUwR</span><br><span class="hljs-comment">hdJtjjnM8gIhAP3NqmuqTjrpoocma/ahLvBX2YQqUyHleuypNtoTBexo</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBdjCCARugAwIBAgIJAIl0FKTcJnfPMAoGCCqGSM49BAMCMDwxFTATBgNVBAMM</span><br><span class="hljs-comment">DGRpcl9jaGFpbl9jYTETMBEGA1UECgwKZmlzY28tYmNvczEOMAwGA1UECwwFY2hh</span><br><span class="hljs-comment">aW4wHhcNMjExMjA4MDYyNDEyWhcNMzExMjA2MDYyNDEyWjA1MQ0wCwYDVQQDDART</span><br><span class="hljs-comment">WENaMRMwEQYDVQQKDApmaXNjby1iY29zMQ8wDQYDVQQLDAZhZ2VuY3kwVjAQBgcq</span><br><span class="hljs-comment">hkjOPQIBBgUrgQQACgNCAARsfoTWF</span><span class="hljs-literal">+</span><span class="hljs-comment">pt4ku2v5N6nKac8dGLzAXtDO41xxwuUjmQ</span><br><span class="hljs-comment">6grfLtPdgGxNXwbVjAxiVQCqDloiRCoqoLJHWQBVGYN4oxAwDjAMBgNVHRMEBTAD</span><br><span class="hljs-comment">AQH/MAoGCCqGSM49BAMCA0kAMEYCIQDuesdsVVKZJ8sZSVFaTbyaBqxDZVUAZH7B</span><br><span class="hljs-comment">jDsrud3X7QIhAOtNBs2TbegkXQJt5q2gx8m9tQZmiYlTrWoq</span><span class="hljs-literal">+</span><span class="hljs-comment">NQaWUZT</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br></code></pre></td></tr></table></figure>
+
+<p>node.key</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">-----BEGIN <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br>MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQgDEQULLcgRVnBfq0VZek6<br>Z5Ednc6Ojvh93yiwPpM3vwahRANCAAR8iz9Piij/JIpykkBuvA4rn8JnjQ4gfktg<br><span class="hljs-number">1</span>Z6pwPuXl4RWn0g9yWetYokEbh7aFfU6kO3BF4chtr2GHnVxYJJ4<br>-----<span class="hljs-keyword">END</span> <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br><br></code></pre></td></tr></table></figure>
+
+<p>sdk.crt</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck">--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBdjCCARugAwIBAgIJAKfC1eAgwY28MAoGCCqGSM49BAMCMDUxDTALBgNVBAMM</span><br><span class="hljs-comment">BFNYQ1oxEzARBgNVBAoMCmZpc2NvLWJjb3MxDzANBgNVBAsMBmFnZW5jeTAeFw0y</span><br><span class="hljs-comment">MTEyMDgwNjI2MzhaFw0zMTEyMDYwNjI2MzhaMDIxDDAKBgNVBAMMA3NkazETMBEG</span><br><span class="hljs-comment">A1UECgwKZmlzY28tYmNvczENMAsGA1UECwwEbm9kZTBWMBAGByqGSM49AgEGBSuB</span><br><span class="hljs-comment">BAAKA0IABHyLP0</span><span class="hljs-literal">+</span><span class="hljs-comment">KKP8kinKSQG68DiufwmeNDiB</span><span class="hljs-literal">+</span><span class="hljs-comment">S2DVnqnA</span><span class="hljs-literal">+</span><span class="hljs-comment">5eXhFafSD3JZ61i</span><br><span class="hljs-comment">iQRuHtoV9TqQ7cEXhyG2vYYedXFgknijGjAYMAkGA1UdEwQCMAAwCwYDVR0PBAQD</span><br><span class="hljs-comment">AgXgMAoGCCqGSM49BAMCA0kAMEYCIQCmtb2BkLWRo3B/RLMJoMTB/2XZW9/GwUwR</span><br><span class="hljs-comment">hdJtjjnM8gIhAP3NqmuqTjrpoocma/ahLvBX2YQqUyHleuypNtoTBexo</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">BEGIN</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br><span class="hljs-comment">MIIBdjCCARugAwIBAgIJAIl0FKTcJnfPMAoGCCqGSM49BAMCMDwxFTATBgNVBAMM</span><br><span class="hljs-comment">DGRpcl9jaGFpbl9jYTETMBEGA1UECgwKZmlzY28tYmNvczEOMAwGA1UECwwFY2hh</span><br><span class="hljs-comment">aW4wHhcNMjExMjA4MDYyNDEyWhcNMzExMjA2MDYyNDEyWjA1MQ0wCwYDVQQDDART</span><br><span class="hljs-comment">WENaMRMwEQYDVQQKDApmaXNjby1iY29zMQ8wDQYDVQQLDAZhZ2VuY3kwVjAQBgcq</span><br><span class="hljs-comment">hkjOPQIBBgUrgQQACgNCAARsfoTWF</span><span class="hljs-literal">+</span><span class="hljs-comment">pt4ku2v5N6nKac8dGLzAXtDO41xxwuUjmQ</span><br><span class="hljs-comment">6grfLtPdgGxNXwbVjAxiVQCqDloiRCoqoLJHWQBVGYN4oxAwDjAMBgNVHRMEBTAD</span><br><span class="hljs-comment">AQH/MAoGCCqGSM49BAMCA0kAMEYCIQDuesdsVVKZJ8sZSVFaTbyaBqxDZVUAZH7B</span><br><span class="hljs-comment">jDsrud3X7QIhAOtNBs2TbegkXQJt5q2gx8m9tQZmiYlTrWoq</span><span class="hljs-literal">+</span><span class="hljs-comment">NQaWUZT</span><br>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">END</span> <span class="hljs-comment">CERTIFICATE</span>--<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><br></code></pre></td></tr></table></figure>
+
+<p>sdk.key</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">-----BEGIN <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br>MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQgDEQULLcgRVnBfq0VZek6<br>Z5Ednc6Ojvh93yiwPpM3vwahRANCAAR8iz9Piij/JIpykkBuvA4rn8JnjQ4gfktg<br><span class="hljs-number">1</span>Z6pwPuXl4RWn0g9yWetYokEbh7aFfU6kO3BF4chtr2GHnVxYJJ4<br>-----<span class="hljs-keyword">END</span> <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/categories/FISCO-BCOS/">FISCO BCOS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/%E7%BD%91%E7%BB%9C%E6%90%AD%E5%BB%BA/">网络搭建</a>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86/">证书管理</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/08/FISCO-Governance-%E8%B4%A6%E6%88%B7/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">FISCO-Governance-账户</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/07/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95-raft/">
+                        <span class="hidden-mobile">共识算法-raft</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/events.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/nwc_bc_gogog.github.io/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/nwc_bc_gogog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/nwc_bc_gogog.github.io/js/boot.js" ></script>
+
+
+</body>
+</html>

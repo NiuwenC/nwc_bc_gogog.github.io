@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<html lang="zh_CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <link rel="icon" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#447EA5">
+  <meta name="description" content="">
+  <meta name="author" content="JackNiu">
+  <meta name="keywords" content="">
+  <meta name="description" content="Rafthttps:&#x2F;&#x2F;raft.github.io&#x2F; Raft是一种易于理解的共识算法。在容错和性能方面，它相当于Paxos。不同之处在于它被分解成相对独立的子问题，并且它清楚地处理了实际系统所需的所有主要部分。我们希望Raft将为更广泛的受众提供共识，并且这些更广泛的受众将能够开发出比今天可用的各种更高质量的基于共识的系统。 共识通常出现在复制状态机的上下文中，这是构建容错系统的一般方法。每个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="共识算法-raft">
+<meta property="og:url" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/12/07/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95-raft/index.html">
+<meta property="og:site_name" content="区块链啦啦啦">
+<meta property="og:description" content="Rafthttps:&#x2F;&#x2F;raft.github.io&#x2F; Raft是一种易于理解的共识算法。在容错和性能方面，它相当于Paxos。不同之处在于它被分解成相对独立的子问题，并且它清楚地处理了实际系统所需的所有主要部分。我们希望Raft将为更广泛的受众提供共识，并且这些更广泛的受众将能够开发出比今天可用的各种更高质量的基于共识的系统。 共识通常出现在复制状态机的上下文中，这是构建容错系统的一般方法。每个">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-07T07:44:15.000Z">
+<meta property="article:modified_time" content="2021-12-07T08:48:40.741Z">
+<meta property="article:author" content="JackNiu">
+<meta property="article:tag" content="raft">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>共识算法-raft - 区块链啦啦啦</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/nwc_bc_gogog.github.io/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/nwc_bc_gogog.github.io/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"niuwenc.github.io","root":"/nwc_bc_gogog.github.io/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/nwc_bc_gogog.github.io/local-search.xml"};
+  </script>
+  <script  src="/nwc_bc_gogog.github.io/js/utils.js" ></script>
+  <script  src="/nwc_bc_gogog.github.io/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/nwc_bc_gogog.github.io/">
+      <strong>我的区块链</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/nwc_bc_gogog.github.io/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="共识算法-raft">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-07 15:44" pubdate>
+        2021年12月7日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      5 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">共识算法-raft</h1>
+            
+            <div class="markdown-body">
+              <h2 id="Raft"><a href="#Raft" class="headerlink" title="Raft"></a>Raft</h2><p><a target="_blank" rel="noopener" href="https://raft.github.io/">https://raft.github.io/</a></p>
+<p>Raft是一种易于理解的共识算法。在容错和性能方面，它相当于Paxos。不同之处在于它被分解成相对独立的子问题，并且它清楚地处理了实际系统所需的所有主要部分。我们希望Raft将为更广泛的受众提供共识，并且这些更广泛的受众将能够开发出比今天可用的各种更高质量的基于共识的系统。</p>
+<p>共识通常出现在复制状态机的上下文中，这是构建容错系统的一般方法。每个服务器都有一个状态机和一个日志。状态机是我们希望实现容错的组件，例如散列表。即使集群中的少数服务器出现故障，客户端也会认为它们正在与单个可靠的状态机进行交互。每个状态机将其日志中的输入命令作为输入命令。在我们的哈希表示例中，日志将包括像将x设置为3这样的命令。共识算法用于对服务器日志中的命令达成一致。一致性算法必须确保，如果任何状态机应用set x到3作为第n个命令，其他状态机将永远不会应用不同的第n个命令。因此，每个状态机处理相同系列的命令，从而产生相同系列的结果，并到达相同系列的状态。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Raft通过选举领袖的方式做共识算法。<br>在Raft集群里，服务器可能会使三种身份其中一个: 领袖(leader)、 追随者(follower)、或者是候选人(candidate). 在正常情况下只会有一个领袖，其他都是追随者。 而领袖会负责所有外部的请求，如果不是领袖的机器收到时，请求会被导到领袖。</p>
+<p>通常领袖会借由固定时间发送消息，也就是心跳(heartbeat), 让追随者知道集群的领袖还在运作。 而每个追随者都会设计超时机制，当超过一定时间没有收到心跳(150ms或者300ms)，集群就会进入选举状态。</p>
+<p>Raft将问题拆分成数个子问题分开解决，让人更容易了解:</p>
+<ul>
+<li>领袖选举</li>
+<li>记录复写</li>
+<li>安全性</li>
+</ul>
+<h4 id="领袖选举"><a href="#领袖选举" class="headerlink" title="领袖选举"></a>领袖选举</h4><p>在起始算法或领袖死机、断线的时候，就需要选举出新的领袖。<br>此时集群进入新的任期（英语：term）并开始选举，如果选举成功则新的领袖开始执行工作，反之则视此任期终止，开始新的任期并开始下一场选举。<br>此时集群进入新的任期（英语：term）并开始选举，如果选举成功则新的领袖开始执行工作，反之则视此任期终止，开始新的任期并开始下一场选举。<br>如果候选人收到其他候选人的拉票、而且拉票的任期编号不小于自己的任期编号，就会自认落选，成为追随者，并认定来拉票的候选人为领袖。如果有候选人收到过半的选票就当选为新的领袖。如果超时仍没有选出新领袖，此任期自动终止，开始新的任期并开始下一场选举。</p>
+<p>Raft每个服务器的超时期限是随机的，这降低伺服务同时竞选的几率，也降低因两个竞选人得票都不过半而选举失败的几率。</p>
+<pre><code>也就是说
+A的超时是10ms
+B的超时是20ms
+当领袖的心跳时间超时了，A先发现，A先任期编号加1，A先投票，A先拉票。B收到了A的拉票请求，A的编号为2，B为1，此时B自认落选，将成为追随者，将票给A。
+</code></pre>
+<h4 id="记录复写"><a href="#记录复写" class="headerlink" title="记录复写"></a>记录复写</h4><p>记录复写的责任在领袖身上。<br>整个集群有个复写的状态机（英语：state machine），可执行外来的指令。领袖接收指令，将之写入自己记录中的新指令部分，然后把指令转发给追随者。如果有追随者没反应，领袖会不断重发指令、直到每个追随者都成功将新指令写入记录为止。</p>
+<p>当领袖收到过半追随者确认写入的消息，就会把指令视为已存储（英语：committed）。当追随者发现指令状态变成已存储，就会在其状态机上执行该指令。</p>
+<p>当领袖死机时，领袖的某些新指令可能还没复写到集群整体，造成集群的记录处于不一致的状态。新领袖会担起重返一致的责任，让每个追随者的记录都和它的一致，做法是：和每个追随者比对记录，找出两者一致的最后一笔指令，删除追随者之后的指令，把自己之后的指令拷贝给追随者。这个机制完成时，每个服务器的记录就会一致。</p>
+<h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>Raft保证以下的安全性：</p>
+<ul>
+<li>选举安全性：每个任期最多只能选出一个领袖。</li>
+<li>领袖附加性：领袖只会把新指令附加（英语：append）在记录尾端，不会改写或删除已有指令。</li>
+<li>记录符合性：如果某个指令在两个记录中的任期和指令序号一样，则保证序号较小的指令也完全一样。</li>
+<li>领袖完整性：如果某个指令在某个任期中存储成功，则保证存在于领袖该任期之后的记录中。</li>
+<li>状态机安全性：如果某服务器在其状态机上执行了某个指令，其他服务器保证不会在同个状态上执行不同的指令。</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/categories/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">共识算法</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/raft/">raft</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/08/FISCO-7-%E8%AF%81%E4%B9%A6%E7%AE%A1%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">FISCO-7-证书管理</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/07/FISCO-7-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1%E8%A7%A3%E6%9E%90-%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">
+                        <span class="hidden-mobile">FISCO-7-核心模块设计解析-共识算法</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/events.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/nwc_bc_gogog.github.io/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/nwc_bc_gogog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/nwc_bc_gogog.github.io/js/boot.js" ></script>
+
+
+</body>
+</html>
