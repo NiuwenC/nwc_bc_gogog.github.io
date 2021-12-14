@@ -1,0 +1,454 @@
+
+
+<!DOCTYPE html>
+<html lang="zh_CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <link rel="icon" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#447EA5">
+  <meta name="description" content="">
+  <meta name="author" content="JackNiu">
+  <meta name="keywords" content="">
+  <meta name="description" content="椭圆曲线: 一族曲线，广泛用于密码学。这里仅指使用了secp256k1的椭圆曲线或者国米sm2p256v1的椭圆曲线 私钥: 用户私有密钥，用于签名，解密等，这里特指基于椭圆曲线的私钥 公钥: 公开的密钥，用于验签、加密等，这里特指基于椭圆曲线的公钥 地址: 用公钥经过特定的哈希算法生成的账户地址 助记词: 一串单词文本，解决私钥难以记忆，表达的问题，可结合口令得到私钥 派生: 私钥根据不同场景">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FISCO-Governance-私钥">
+<meta property="og:url" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/12/13/FISCO-Governance-%E7%A7%81%E9%92%A5/index.html">
+<meta property="og:site_name" content="区块链啦啦啦">
+<meta property="og:description" content="椭圆曲线: 一族曲线，广泛用于密码学。这里仅指使用了secp256k1的椭圆曲线或者国米sm2p256v1的椭圆曲线 私钥: 用户私有密钥，用于签名，解密等，这里特指基于椭圆曲线的私钥 公钥: 公开的密钥，用于验签、加密等，这里特指基于椭圆曲线的公钥 地址: 用公钥经过特定的哈希算法生成的账户地址 助记词: 一串单词文本，解决私钥难以记忆，表达的问题，可结合口令得到私钥 派生: 私钥根据不同场景">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/architecture.png">
+<meta property="og:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/shard.png">
+<meta property="og:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/personal_use.png">
+<meta property="article:published_time" content="2021-12-13T07:15:50.000Z">
+<meta property="article:modified_time" content="2021-12-14T06:55:43.046Z">
+<meta property="article:author" content="JackNiu">
+<meta property="article:tag" content="key">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/architecture.png">
+  
+  <title>FISCO-Governance-私钥 - 区块链啦啦啦</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/nwc_bc_gogog.github.io/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/nwc_bc_gogog.github.io/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"niuwenc.github.io","root":"/nwc_bc_gogog.github.io/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/nwc_bc_gogog.github.io/local-search.xml"};
+  </script>
+  <script  src="/nwc_bc_gogog.github.io/js/utils.js" ></script>
+  <script  src="/nwc_bc_gogog.github.io/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/nwc_bc_gogog.github.io/">
+      <strong>我的区块链</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/nwc_bc_gogog.github.io/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FISCO-Governance-私钥">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-13 15:15" pubdate>
+        2021年12月13日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      10 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FISCO-Governance-私钥</h1>
+            
+            <div class="markdown-body">
+              <ul>
+<li>椭圆曲线: 一族曲线，广泛用于密码学。这里仅指使用了secp256k1的椭圆曲线或者国米sm2p256v1的椭圆曲线</li>
+<li>私钥: 用户私有密钥，用于签名，解密等，这里特指基于椭圆曲线的私钥</li>
+<li>公钥: 公开的密钥，用于验签、加密等，这里特指基于椭圆曲线的公钥</li>
+<li>地址: 用公钥经过特定的哈希算法生成的账户地址</li>
+<li>助记词: 一串单词文本，解决私钥难以记忆，表达的问题，可结合口令得到私钥</li>
+<li>派生: 私钥根据不同场景生成子私钥的过程，用于减低记忆成本、泄露风险。私钥公钥均可以派生</li>
+<li>chaincode: 生成密钥时会附带一个链码，用于安全派生子密钥</li>
+<li>密钥导出: 指将私钥按照固定格式加密导出，如keystore、pem、p12等</li>
+<li>密钥恢复: 将机密导出的私钥还原为私钥明文</li>
+<li>分片: 将数据分为若干块的过程</li>
+<li>还原: 将碎块还原为原始数据的过程。</li>
+</ul>
+<h2 id="组件介绍"><a href="#组件介绍" class="headerlink" title="组件介绍"></a>组件介绍</h2><h3 id="1-关键特性"><a href="#1-关键特性" class="headerlink" title="1 关键特性"></a>1 关键特性</h3><p><img src="https://governance-doc.readthedocs.io/zh_CN/latest/_images/architecture.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<h4 id="1-1-多种密钥生成方式"><a href="#1-1-多种密钥生成方式" class="headerlink" title="1.1 多种密钥生成方式"></a>1.1 多种密钥生成方式</h4><p>提供三种密钥生成方式：随机数、助记词、密钥派生。随机数方式是指椭圆曲线方式，在曲线域内生成一个随机数作为私钥。助记词遵循BIP-32协议，通过助记词和口令可获取私钥，降低了私钥保存的难度。而密钥派生模式下，支持通过父级私钥和一串数据来确定性地生成下级私钥，适用于根据不同场景使用不同私钥的方案。</p>
+<h4 id="1-2-支持密钥导出"><a href="#1-2-支持密钥导出" class="headerlink" title="1.2 支持密钥导出"></a>1.2 支持密钥导出</h4><p>支持用户对私钥进行导出，目前支持PEM、PKCS12、ETH Keystore等标准。PEM格式下，私钥信息被编码到.pem文件中；PKCS12格式下，私钥通过口令加密，按RFC7292规范导出到p12文件中，与openssl等主流工具相兼容；ETH Keystore格式下，私钥通过口令加密，按以太坊标准keystore格式导出到json文件中。</p>
+<h4 id="1-3-密钥托管方案"><a href="#1-3-密钥托管方案" class="headerlink" title="1.3 密钥托管方案"></a>1.3 密钥托管方案</h4><p>支持企业机构来托管用户私钥，适用于B2B2C等业务模式。该模式下，允许将用户的私钥加密并保存，其中加密后的密钥可保存到文件，也可以保存到数据库。此外，加密口令也可以单独保存到另一个数据库，通过双库的方式提高了安全性。</p>
+<h4 id="1-4-私钥分片、还原"><a href="#1-4-私钥分片、还原" class="headerlink" title="1.4 私钥分片、还原"></a>1.4 私钥分片、还原</h4><p>支持将私钥进行门限分片和还原。使用者可以将私钥分解成n个碎片，只有集齐指定数量的碎片，才能恢复出原始私钥。<br><img src="https://governance-doc.readthedocs.io/zh_CN/latest/_images/shard.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<h4 id="1-5-常规密码学操作"><a href="#1-5-常规密码学操作" class="headerlink" title="1.5 常规密码学操作"></a>1.5 常规密码学操作</h4><p>支持常规密码学操作，例如签名、加解密、哈希。</p>
+<h4 id="1-6-国密支持"><a href="#1-6-国密支持" class="headerlink" title="1.6 国密支持"></a>1.6 国密支持</h4><p>支持国密算法。例如，对于私钥生成、签名、加解密等非对称密码学操作，我们采用标准国密曲线sm2p256v1；对于哈希，则采用SM3标准。</p>
+<h3 id="2-场景实例"><a href="#2-场景实例" class="headerlink" title="2 场景实例"></a>2 场景实例</h3><p>某用户想使用私钥来处理不同的业务需求，出于安全性考虑，该用户希望有一个根私钥，然后在不同的场景下使用其派生的子私钥。</p>
+<ol>
+<li>首先该用户使用助记词方式生成了一个私钥作为根私钥，将该助记词抄写在纸上妥善保管。</li>
+<li>随后，为了私钥明文在不被黑客攻击，该用户还用自己的口令将其加密为P12格式保存好。</li>
+<li>最后，该用户还是担心该私钥泄露，便采用门限分片将其分解为多片，置于不同的设备上，如果丢失，可以通过这些设备还原。</li>
+</ol>
+<p><img src="https://governance-doc.readthedocs.io/zh_CN/latest/_images/personal_use.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<p>随机数方式生成私钥</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">package com.webank.demo;<br><br>import com.webank.keygen.<span class="hljs-keyword">exception</span>.KeyGenException;<br>import com.webank.keygen.model.PkeyInfo;<br>import com.webank.keygen.service.PkeyByRandomService;<br>import com.webank.keygen.utils.KeyPresenter;<br><br>public <span class="hljs-keyword">class</span> GenPrivKey &#123;<br>    public static void main(String<span class="hljs-literal">[]</span> args) throws KeyGenException &#123;<br>        <span class="hljs-comment">//生成非国密私钥</span><br>        PkeyByRandomService pkeyByRandomService = <span class="hljs-keyword">new</span> <span class="hljs-constructor">PkeyByRandomService()</span>;<br>        PkeyInfo pkeyInfo = pkeyByRandomService.generate<span class="hljs-constructor">PrivateKey()</span>;<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;private key: &quot;</span>+ <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">KeyPresenter</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">String(<span class="hljs-params">pkeyInfo</span>.<span class="hljs-params">getPrivateKey</span>()</span>));<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;public key: &quot;</span> + <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">KeyPresenter</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">String(<span class="hljs-params">pkeyInfo</span>.<span class="hljs-params">getPublicKey</span>()</span>.get<span class="hljs-constructor">PublicKey()</span>));<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;address: &quot;</span>+ pkeyInfo.get<span class="hljs-constructor">Address()</span>);<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">KeyPresenter</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">String(<span class="hljs-params">pkeyInfo</span>.<span class="hljs-params">getChainCode</span>()</span>));<br>        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">KeyPresenter</span>.</span></span><span class="hljs-keyword">as</span><span class="hljs-constructor">String(<span class="hljs-params">pkeyInfo</span>.<span class="hljs-params">getPublicKey</span>()</span>.get<span class="hljs-constructor">Chaincode()</span>));<br>    &#125;<br>&#125;<br><br><br><span class="hljs-keyword">private</span> key: <span class="hljs-number">0x818e7969dc6ae16387f03ec098afbbc49a3239a6a36d018b69d51964f86ee5a6</span><br>public key: <span class="hljs-number">0x040443cf0bc055654f2b49e7cca92f6e032effee87bb955552d0e0094f5d997bf369bb687e210cf216f17ab1d3328547353dfbe4446142fd93541204b58579e408</span><br>address: adf1a3a16cda096c8b9da00ad38f927d7e194f97<br><span class="hljs-number">0x2aee6256bc760b7a664154400dca52ba</span><br><span class="hljs-number">0x2aee6256bc760b7a664154400dca52ba</span><br><br>````<br><br>私钥转换为公钥及地址<br></code></pre></td></tr></table></figure>
+<p>package com.webank.demo;</p>
+<p>import com.webank.keygen.enums.EccTypeEnums;<br>import com.webank.keygen.model.PkeyInfo;<br>import com.webank.keygen.utils.KeyPresenter;</p>
+<p>public class KeyToPubAndAddress {<br>    public static void main(String[] args) {<br>        String pkeystr = “0x818e7969dc6ae16387f03ec098afbbc49a3239a6a36d018b69d51964f86ee5a6”;<br>        byte[] privateKey = KeyPresenter.asBytes(pkeystr);<br>        PkeyInfo info = PkeyInfo.builder()<br>                .privateKey(privateKey)<br>                .eccName(EccTypeEnums.SECP256K1.getEccName())<br>                .build();<br>        System.out.println(“public key: “ + KeyPresenter.asString(info.getPublicKey().getPublicKey()));<br>        System.out.println(“address: “+ info.getAddress());<br>    }<br>}</p>
+<p>public key: 0x040443cf0bc055654f2b49e7cca92f6e032effee87bb955552d0e0094f5d997bf369bb687e210cf216f17ab1d3328547353dfbe4446142fd93541204b58579e408<br>address: adf1a3a16cda096c8b9da00ad38f927d7e194f97</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">助记词使用<br></code></pre></td></tr></table></figure>
+
+
+<pre><code>
+</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/categories/Governance/">Governance</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/key/">key</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/14/FISCO-Solidity%E7%96%91%E9%9A%BE/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">FISCO-Solidity疑难</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/13/FISCO-Governance-%E8%AF%81%E4%B9%A6/">
+                        <span class="hidden-mobile">FISCO-Governance-证书</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/events.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/nwc_bc_gogog.github.io/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/nwc_bc_gogog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/nwc_bc_gogog.github.io/js/boot.js" ></script>
+
+
+</body>
+</html>

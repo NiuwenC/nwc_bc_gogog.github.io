@@ -1,0 +1,449 @@
+
+
+<!DOCTYPE html>
+<html lang="zh_CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <link rel="icon" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#447EA5">
+  <meta name="description" content="">
+  <meta name="author" content="JackNiu">
+  <meta name="keywords" content="">
+  <meta name="description" content="1 基本概念1 私钥和公钥在非对称加密领域，对数据的加解密、签名都依赖于密钥对。在密钥对中，公开的密钥叫做公钥，只有自己知道的叫私钥。非对称加密有许多体系，最著名的是RSA、DH、ECDSA。其中ECDSA是区块链领域采纳的密钥体系，也称为椭圆曲线体系，该体系中，私钥是一个某范围内的整数，公钥则是曲线上的一个点。 2 曲线在椭圆曲线体系中，密钥生成依赖于曲线参数，一条区县中合法的密钥对，在另一条曲">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FISCO-Governance-证书">
+<meta property="og:url" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/12/13/FISCO-Governance-%E8%AF%81%E4%B9%A6/index.html">
+<meta property="og:site_name" content="区块链啦啦啦">
+<meta property="og:description" content="1 基本概念1 私钥和公钥在非对称加密领域，对数据的加解密、签名都依赖于密钥对。在密钥对中，公开的密钥叫做公钥，只有自己知道的叫私钥。非对称加密有许多体系，最著名的是RSA、DH、ECDSA。其中ECDSA是区块链领域采纳的密钥体系，也称为椭圆曲线体系，该体系中，私钥是一个某范围内的整数，公钥则是曲线上的一个点。 2 曲线在椭圆曲线体系中，密钥生成依赖于曲线参数，一条区县中合法的密钥对，在另一条曲">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/cert_framework.png">
+<meta property="og:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/cert_chain.png">
+<meta property="og:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/cert_use.png">
+<meta property="article:published_time" content="2021-12-13T01:41:31.000Z">
+<meta property="article:modified_time" content="2021-12-13T06:40:08.827Z">
+<meta property="article:author" content="JackNiu">
+<meta property="article:tag" content="Cert">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/cert_framework.png">
+  
+  <title>FISCO-Governance-证书 - 区块链啦啦啦</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/nwc_bc_gogog.github.io/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/nwc_bc_gogog.github.io/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"niuwenc.github.io","root":"/nwc_bc_gogog.github.io/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/nwc_bc_gogog.github.io/local-search.xml"};
+  </script>
+  <script  src="/nwc_bc_gogog.github.io/js/utils.js" ></script>
+  <script  src="/nwc_bc_gogog.github.io/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/nwc_bc_gogog.github.io/">
+      <strong>我的区块链</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/nwc_bc_gogog.github.io/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FISCO-Governance-证书">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-13 09:41" pubdate>
+        2021年12月13日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      10 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FISCO-Governance-证书</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1 基本概念"></a>1 基本概念</h2><h3 id="1-私钥和公钥"><a href="#1-私钥和公钥" class="headerlink" title="1 私钥和公钥"></a>1 私钥和公钥</h3><p>在非对称加密领域，对数据的加解密、签名都依赖于密钥对。在密钥对中，公开的密钥叫做公钥，只有自己知道的叫私钥。非对称加密有许多体系，最著名的是RSA、DH、ECDSA。其中ECDSA是区块链领域采纳的密钥体系，也称为椭圆曲线体系，该体系中，私钥是一个某范围内的整数，公钥则是曲线上的一个点。</p>
+<h3 id="2-曲线"><a href="#2-曲线" class="headerlink" title="2 曲线"></a>2 曲线</h3><p>在椭圆曲线体系中，密钥生成依赖于曲线参数，一条区县中合法的密钥对，在另一条曲线的环境中，就是非法密钥。最经典的曲线之一就是 secp256k1,为多种主流区块链采纳； 另一种曲线是国密曲线sm2p256v1, 该曲线满足我国的密码学标准。</p>
+<h3 id="3-证书"><a href="#3-证书" class="headerlink" title="3. 证书"></a>3. 证书</h3><p>数字证书也称为公开密钥证书，是指用于电子信息活动中电子文件行为主体的验证和证明。并可以实现电子文件保密性和完整性的电子数据。 数字证书是一个经证书认证中心(CA)发行的文件。</p>
+<h3 id="4-数字签名"><a href="#4-数字签名" class="headerlink" title="4. 数字签名"></a>4. 数字签名</h3><p>数字签名(Digital Signature)(又称为公钥数字签名、电子签章)是一种类似写在纸上的普通的物理签名，但是使用了公钥加密领域的技术实现， 用于鉴别数字信息的方法。 一套数字签名通常定义两种互补的运算，一个用于签名，一个用于验证。</p>
+<h2 id="2-组件介绍"><a href="#2-组件介绍" class="headerlink" title="2 组件介绍"></a>2 组件介绍</h2><p>WeBankBlockchain-Governance-Cert提供了证书生命周期管理的解决方案，规范证书签发流程，支持证书托管，支持多种签名算法，方便个人或企业使用。</p>
+<h3 id="1-设计概要"><a href="#1-设计概要" class="headerlink" title="1. 设计概要"></a>1. 设计概要</h3><p>WeBankBlockchain-Governance-Cert包含两个模块，cert-toolkit和cert-mgr，cert-toolkit作为证书生成工具，可作为独立工具包使用，cert-mgr基于cert-toolkit工具包，提供了证书的托管能力，并支持证书的生命周期管理，对签发的流程统一规范。</p>
+<p><img src="https://governance-doc.readthedocs.io/zh_CN/latest/_images/cert_framework.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<h3 id="2-关键特性"><a href="#2-关键特性" class="headerlink" title="2 关键特性"></a>2 关键特性</h3><h4 id="2-1-支持多种密钥和签名算法"><a href="#2-1-支持多种密钥和签名算法" class="headerlink" title="2.1 支持多种密钥和签名算法"></a>2.1 支持多种密钥和签名算法</h4><p>支持RSA，EC等密钥算法，支持SM2国密算法，支持SHA256WITHRSA,SHA256WITHECDSA、SM3WITHSM2等签名算法</p>
+<h4 id="2-2-支持证书托管"><a href="#2-2-支持证书托管" class="headerlink" title="2.2 支持证书托管"></a>2.2 支持证书托管</h4><p>证书和子证书请求会持久化在数据库中，同时证书相关的私钥也会保存，对证书信息统一管理，可对证书进行多维度查询，并支持证书的导出</p>
+<h4 id="2-3-支持多级证书签发"><a href="#2-3-支持多级证书签发" class="headerlink" title="2.3 支持多级证书签发"></a>2.3 支持多级证书签发</h4><p>证书可进行多级签发，可选择上级证书并请求签发，生成证书链，使用方便，操作便捷</p>
+<p><img src="https://governance-doc.readthedocs.io/zh_CN/latest/_images/cert_chain.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<h4 id="2-4-支持证书重置"><a href="#2-4-支持证书重置" class="headerlink" title="2.4 支持证书重置"></a>2.4 支持证书重置</h4><p>支持对证书进行重置，重置信息包括有效时间、证书用途等。</p>
+<h3 id="3-场景示例"><a href="#3-场景示例" class="headerlink" title="3 场景示例"></a>3 场景示例</h3><h4 id="3-1-链上节点准入证书管理"><a href="#3-1-链上节点准入证书管理" class="headerlink" title="3.1 链上节点准入证书管理"></a>3.1 链上节点准入证书管理</h4><p>链上节点证书的签发统一由WeBankBlockchain-Governance-Cert来完成，Governance-Cert可以集成或者独立部署，并由权威机构来管理服务。<br>在链初始化时可以由部署者调用接口完成根证书的生成，新增机构或者节点可以通过Governance-Cert提供的查询接口，来查询根证书，并提交子证书请求，根证书管理者可以从通过查询请求列表，来获取准入请求，并签发子证书，子证书签发完成，下一级证书采取同样逻辑处理。 通过Governance-cert对于证书的管理，可以规范流程，提升效率，并保证证书安全。</p>
+<p><img src="https://governance-doc.readthedocs.io/zh_CN/latest/_images/cert_use.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<h4 id="3-2-证书工具包使用"><a href="#3-2-证书工具包使用" class="headerlink" title="3.2 证书工具包使用"></a>3.2 证书工具包使用</h4><p>WeBankBlockchain-Governance-Cert中cert-toolkit可作为独立JAVA工具包在项目中引用，代替命令行完成证书的生成和签发。企业或个人项目可集成WeBankBlockchain-Governance-Cert作为证书签发工具包</p>
+<h2 id="3-快速开始"><a href="#3-快速开始" class="headerlink" title="3 快速开始"></a>3 快速开始</h2><h3 id="cert-toolkit使用"><a href="#cert-toolkit使用" class="headerlink" title="cert-toolkit使用"></a>cert-toolkit使用</h3><h4 id="1-功能介绍"><a href="#1-功能介绍" class="headerlink" title="1 功能介绍"></a>1 功能介绍</h4><p>cert-toolkit用于证书生成。支持轻量级jar包接入。</p>
+<p>支持如下方式:</p>
+<ul>
+<li>根证书请求</li>
+<li>证书请求生成</li>
+<li>子证书生成</li>
+<li>证书文件的读写</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/WeBankBlockchain/</span>Governance-Cert.git<br></code></pre></td></tr></table></figure>
+
+<p>cert-mgr中启动只有创建的表如下:<br>证书信息表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `cert_info` (<br>  `pk_id` <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br>  `cert_content` longtext,<br>  `is_ca_cert` bit(<span class="hljs-number">1</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `issuer_cn` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `issuer_key_id` <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `issuer_org` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `parent_cert_id` <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `serial_number` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `subject_cn` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `subject_key_id` <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `subject_org` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `subject_pub_key` longtext,<br>  `user_id` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  <span class="hljs-keyword">PRIMARY</span> KEY (`pk_id`),<br>  KEY `user_id` (`user_id`),<br>  KEY `issuer_key_id` (`issuer_key_id`),<br>  KEY `subject_key_id` (`subject_key_id`),<br>  KEY `serial_number` (`serial_number`),<br>  KEY `parent_cert_id` (`parent_cert_id`),<br>  KEY `issuer_org` (`issuer_org`),<br>  KEY `issuer_cn` (`issuer_cn`),<br>  KEY `subject_org` (`subject_org`),<br>  KEY `subject_cn` (`subject_cn`),<br>  KEY `is_ca_cert` (`is_ca_cert`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8;<br><br></code></pre></td></tr></table></figure>
+
+<p>证书keys信息</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `cert_keys_info` (<br>  `pk_id` <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br>  `key_alg` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `key_pem` longtext,<br>  `user_id` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  <span class="hljs-keyword">PRIMARY</span> KEY (`pk_id`),<br>  KEY `user_id` (`user_id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8;<br><br><br><br></code></pre></td></tr></table></figure>
+<p>证书请求信息</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `cert_request_info` (<br>  `pk_id` <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br>  `cert_request_content` longtext,<br>  `issue` bit(<span class="hljs-number">1</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `parent_cert_id` <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `parent_cert_user_id` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `subject_cn` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `subject_key_id` <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `subject_org` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `user_id` <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  <span class="hljs-keyword">PRIMARY</span> KEY (`pk_id`),<br>  KEY `user_id` (`user_id`),<br>  KEY `subject_key_id` (`subject_key_id`),<br>  KEY `parent_cert_id` (`parent_cert_id`),<br>  KEY `subject_org` (`subject_org`),<br>  KEY `subject_cn` (`subject_cn`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8;<br><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/categories/Governance/">Governance</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/Cert/">Cert</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/13/FISCO-Governance-%E7%A7%81%E9%92%A5/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">FISCO-Governance-私钥</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/10/FISCO-Governance-%E6%9D%83%E9%99%90/">
+                        <span class="hidden-mobile">FISCO-Governance-权限</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/events.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/nwc_bc_gogog.github.io/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/nwc_bc_gogog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/nwc_bc_gogog.github.io/js/boot.js" ></script>
+
+
+</body>
+</html>

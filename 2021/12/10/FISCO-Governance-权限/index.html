@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html lang="zh_CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <link rel="icon" href="/nwc_bc_gogog.github.io/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#447EA5">
+  <meta name="description" content="">
+  <meta name="author" content="JackNiu">
+  <meta name="keywords" content="">
+  <meta name="description" content="WeBankBlockchain-Governance-Authority定位为区块链权限治理组件，旨在为智能合约开发者提供强大、轻便的权限管理工具，使得开发者可以快速地为自己的业务系统搭建智能合约权限控制体系。https:&#x2F;&#x2F;governance-doc.readthedocs.io&#x2F;zh_CN&#x2F;latest&#x2F;docs&#x2F;WeBankBlockchain-Governance-Auth&#x2F;gov.h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FISCO-Governance-权限">
+<meta property="og:url" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/12/10/FISCO-Governance-%E6%9D%83%E9%99%90/index.html">
+<meta property="og:site_name" content="区块链啦啦啦">
+<meta property="og:description" content="WeBankBlockchain-Governance-Authority定位为区块链权限治理组件，旨在为智能合约开发者提供强大、轻便的权限管理工具，使得开发者可以快速地为自己的业务系统搭建智能合约权限控制体系。https:&#x2F;&#x2F;governance-doc.readthedocs.io&#x2F;zh_CN&#x2F;latest&#x2F;docs&#x2F;WeBankBlockchain-Governance-Auth&#x2F;gov.h">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/arch.png">
+<meta property="og:image" content="https://niuwenc.github.io/nwc_bc_gogog.github.io/2021/12/10/FISCO-Governance-%E6%9D%83%E9%99%90/01.png">
+<meta property="article:published_time" content="2021-12-10T02:55:16.000Z">
+<meta property="article:modified_time" content="2021-12-10T08:16:45.098Z">
+<meta property="article:author" content="JackNiu">
+<meta property="article:tag" content="Authority">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://governance-doc.readthedocs.io/zh_CN/latest/_images/arch.png">
+  
+  <title>FISCO-Governance-权限 - 区块链啦啦啦</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/nwc_bc_gogog.github.io/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/nwc_bc_gogog.github.io/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"niuwenc.github.io","root":"/nwc_bc_gogog.github.io/","version":"1.8.12","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/nwc_bc_gogog.github.io/local-search.xml"};
+  </script>
+  <script  src="/nwc_bc_gogog.github.io/js/utils.js" ></script>
+  <script  src="/nwc_bc_gogog.github.io/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/nwc_bc_gogog.github.io/">
+      <strong>我的区块链</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/nwc_bc_gogog.github.io/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FISCO-Governance-权限">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-10 10:55" pubdate>
+        2021年12月10日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      10 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FISCO-Governance-权限</h1>
+            
+            <div class="markdown-body">
+              <p>WeBankBlockchain-Governance-Authority定位为区块链权限治理组件，旨在为智能合约开发者提供强大、轻便的权限管理工具，使得开发者可以快速地为自己的业务系统搭建智能合约权限控制体系。<br><a target="_blank" rel="noopener" href="https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/gov.html">https://governance-doc.readthedocs.io/zh_CN/latest/docs/WeBankBlockchain-Governance-Auth/gov.html</a></p>
+<h2 id="组件介绍"><a href="#组件介绍" class="headerlink" title="组件介绍"></a>组件介绍</h2><h3 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h3><p>随着智能合约业务日益丰富，越来越多的合约需要引入权限控制。如果不对智能合约做权限控制，那么无法满足业务的安全性要求。例如，存证场景中，除了上传存证的函数外，还有许多专供审核人员调用的函数，这些函数应仅由审核人员来使用，如果这些函数没有正确设置权限拦截逻辑，整套逻辑就会被攻击者轻易操控。</p>
+<p>WeBankBlockchain-Governance-Authority的目的在于为智能合约开发者提供权限控制功能。开发者只要添加少量代码，即可拦截非法调用。同时，有一个专门的权限治理合约用于治理各个业务合约的拦截规则，对规则的修改只需操作权限治理合约，不需要调整业务合约，且修改会实时生效。</p>
+<h3 id="2-特性"><a href="#2-特性" class="headerlink" title="2 特性"></a>2 特性</h3><h4 id="2-1-函数级的权限粒度"><a href="#2-1-函数级的权限粒度" class="headerlink" title="2.1 函数级的权限粒度"></a>2.1 函数级的权限粒度</h4><p>在权限体系中，可以为每个函数单独设置权限，同一个合约中的不同函数可以有不同的权限设置</p>
+<h4 id="2-2-批量设置用户权限"><a href="#2-2-批量设置用户权限" class="headerlink" title="2.2 批量设置用户权限"></a>2.2 批量设置用户权限</h4><p>合约函数的权限配置基本单位为组，是的可以设置整批账户的权限访问规则</p>
+<h4 id="2-3-侵入性低"><a href="#2-3-侵入性低" class="headerlink" title="2.3 侵入性低"></a>2.3 侵入性低</h4><p>业务合约只需要在代码中引入权限合约地址，并通过在需要权限控制的函数中访问权限合约的权限判断接口，就可以实现权限控制</p>
+<h4 id="2-4-易于集成"><a href="#2-4-易于集成" class="headerlink" title="2.4 易于集成"></a>2.4 易于集成</h4><p>对于权限管理人员，既支持通过手动方式来调用权限合约，也支持通过SDK方式进行调用</p>
+<h4 id="2-5-支持多种治理方式"><a href="#2-5-支持多种治理方式" class="headerlink" title="2.5 支持多种治理方式"></a>2.5 支持多种治理方式</h4><p>允许中心化和去中心化两种方式进行权限治理。在中心化方式中，有一位管理员，可以直接设置各个账户的权限信息；在去中心化方式下，有一个治理委员会，治理委员会成员通过投票来决定如何更改权限信息。</p>
+<h3 id="3-整体原理"><a href="#3-整体原理" class="headerlink" title="3 整体原理"></a>3 整体原理</h3><p><img src="https://governance-doc.readthedocs.io/zh_CN/latest/_images/arch.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<p>合约角度来看，合约分为业务合约和权限合约，业务合约包含了业务逻辑，权限合约包含了权限信息。从角色划分来看，参与角色分为普通调用者和管理员，普通调用者用于调用业务合约，而管理员负责修改权限合约中的合约信息。</p>
+<pre><code>普通调用者调用业务合约，业务合约内部的拦截器会向权限合约查询用户是否有权限调用该函数
+权限合约的鉴权依赖存储其内部的“组权限信息列表”，每个组都记录了包含哪些地址、哪些函数、运行于什么模式。
+组A包含Alice 和Bob 两个地址，并关联了某合约的helloworld函数，
+且组A在白名单模式下，那就意味着只有alice和bob可以访问该合约的helloworld函数，其他账户无权访问。
+</code></pre>
+<h3 id="4-场景示例"><a href="#4-场景示例" class="headerlink" title="4 场景示例"></a>4 场景示例</h3><p>假设现在要开发一个存证智能合约，要求其中某些函数仅能由审查员来调用，例如验证存证。这时，权限合约的管理员到权限治理合约中配置“审查员”组，将审查员的地址添加到该组中、添加相应函数，并将组设为白名单模式。如此配置完成后，权限规则即生效，当审查员之外的账户在调用这些函数的时候，均会被拦截掉，有且仅有审查员可以调用这些函数。</p>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p>权限组件的使用者包括两个角色：治理方和业务方。治理方负责权限合约的部署、配置；业务方负责接入权限合约、拦截非法调用。这一节提供一个简单但完整的示例，通过部署并为业务合约HelloWorld配置权限，以使您了解整个组件的使用流程。这一节的内容包括：</p>
+<ul>
+<li>【治理方】部署权限合约</li>
+<li>【业务方】部署HelloWorld合约</li>
+<li>【治理方】配置HelloWorld的权限</li>
+<li>【业务方】权限验证</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/WeBankBlockchain/</span>Governance-Authority.git<br>cd Governance-Authority<span class="hljs-regexp">/src/m</span>ain/contracts<br></code></pre></td></tr></table></figure>
+
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p><img src="01.png" srcset="/nwc_bc_gogog.github.io/img/loading.gif" lazyload></p>
+<h2 id="治理手册"><a href="#治理手册" class="headerlink" title="治理手册"></a>治理手册</h2><p>权限合约是本组件提供的AuthManager合约，用于配置哪些账户可以访问哪些合约的哪些函数。可以治理多个业务合约的权限。</p>
+<h3 id="1-关键概念"><a href="#1-关键概念" class="headerlink" title="1 关键概念"></a>1 关键概念</h3><h4 id="1-2-组"><a href="#1-2-组" class="headerlink" title="1.2 组"></a>1.2 组</h4><p>组定义了哪些账户可以访问哪些函数。组包含的信息如下：</p>
+<ul>
+<li>账户列表</li>
+<li>模式。包含两个可选择的模式：<ul>
+<li>黑名单模式</li>
+<li>白名单模式</li>
+</ul>
+</li>
+<li>函数列表</li>
+</ul>
+<h3 id="1-3-治理模式"><a href="#1-3-治理模式" class="headerlink" title="1.3 治理模式"></a>1.3 治理模式</h3><p>权限治理合约有两种模式: 管理员模式、委员会模式</p>
+<ul>
+<li>管理员模式下，由单一管理员修改配置；还可以转让管理员权限</li>
+<li>委员会模式下，所有操作均通过投票进行。 委员会成员可以修改组配置。 还可以修改委员会列表，投票规则等。</li>
+</ul>
+<p>一个权限治理合约的模式在部署时即确定，一旦确定一种模式，就无法更改。</p>
+<h3 id="1-4-投票模式"><a href="#1-4-投票模式" class="headerlink" title="1.4 投票模式"></a>1.4 投票模式</h3><p>投票包含两种规则：多签模式和阈值权重模式。</p>
+<ul>
+<li>多签模式下，当投票数达到最小签名数时，投票即通过。</li>
+<li>阈值权重模式下，每个委员均配有对应的权重，当已投票的总权重达到最小阈值时，投票即通过。</li>
+</ul>
+<p>多签是阈值权重模式下的一个特例，即所有委员会的权重为1。</p>
+<h3 id="2-AuthManager合约接口列表"><a href="#2-AuthManager合约接口列表" class="headerlink" title="2 AuthManager合约接口列表"></a>2 AuthManager合约接口列表</h3><ul>
+<li><p>合约部署<br>合约部署时需要决定是管理员模式还是治理委员会模式。以下为管理员模式下权限配置接口：</p>
+<p>  createGroup 创建组<br>  addAccountToGroup 将账户添加到组<br>  addFunctionToGroup 将合约函数关联到组<br>  removeAccountFromGroup 将账户从组内移除<br>  removeFunctionFromGroup 将合约函数与组的关联取消</p>
+</li>
+</ul>
+<p>以下为治理委员会模式下的权限配置接口：</p>
+<pre><code>    requestCreateGroup 请求创建组
+    requestAddAccountToGroup 请求将账户添加到组
+    requestAddFunctionToGroup 请求将合约函数关联到组
+    requestRemoveAccountFromGroup 请求将账户从组内移除
+    requestRemoveFunctionFromGroup 请求将合约函数与组的关联取消
+    approveSingle 投票请求
+    deleteSingle 删除请求
+    getRequestSingle 查看请求
+    executeCreateGroup 创建组
+    executeAddAccountToGroup 执行将账户添加到组
+    executeAddFunctionToGroup 执行将合约函数关联到组
+    executeRemoveAccountFromGroup 执行将账户从组内移除
+    executeRemoveFunctionFromGroup 执行将合约函数与组的关联取消
+</code></pre>
+<p>以下为通用的查询接口</p>
+<pre><code>    containsAccount
+    containsFunction
+    getGroup
+    canCallFunction
+</code></pre>
+<p>以下为管理员模式下的治理接口：</p>
+<pre><code>    transferAdminAuth
+    isAdmin
+</code></pre>
+<p>以下是治理委员会模式下的治理接口：</p>
+<pre><code>    requestSetThreshold
+    requestResetGovernors
+    executeSetThreshold
+    executeResetGovernors
+    requestAddGovernor
+    deleteAddGovernorReq
+    approveAddGovernorReq
+    getGovernorsToAdd
+    executeAddGovernorReq
+    requestRemoveGovernor
+    deleteRemoveGovernorReq
+    approveRemoveGovernorReq
+    getGovernorsToRemove
+    executeRemoveGovernorReq
+</code></pre>
+<h3 id="2-1-部署合约"><a href="#2-1-部署合约" class="headerlink" title="2.1 部署合约"></a>2.1 部署合约</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs css"># 管理员模式<br>deploy AuthManager <span class="hljs-number">1</span> <span class="hljs-selector-attr">[]</span> <span class="hljs-selector-attr">[]</span> <span class="hljs-number">0</span> <br><br><br><br># 委员会治理模式<br>deploy AuthManager <span class="hljs-number">2</span> <span class="hljs-selector-attr">[<span class="hljs-string">&quot;0x1&quot;</span>, <span class="hljs-string">&quot;0x2&quot;</span>, <span class="hljs-string">&quot;0x3&quot;</span>]</span> <span class="hljs-selector-attr">[1,1,1]</span> <span class="hljs-number">3</span> <br><br><br><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/categories/Governance/">Governance</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/nwc_bc_gogog.github.io/tags/Authority/">Authority</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/13/FISCO-Governance-%E8%AF%81%E4%B9%A6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">FISCO-Governance-证书</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/nwc_bc_gogog.github.io/2021/12/09/FISCO-Governance-%E8%B4%A6%E6%88%B7-%E4%BB%A3%E7%A0%81/">
+                        <span class="hidden-mobile">FISCO-Governance-账户-代码</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/events.js" ></script>
+<script  src="/nwc_bc_gogog.github.io/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/nwc_bc_gogog.github.io/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/nwc_bc_gogog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/nwc_bc_gogog.github.io/js/boot.js" ></script>
+
+
+</body>
+</html>
